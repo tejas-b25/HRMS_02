@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~angular-calendar/css/angular-calendar.css"; */
+
+/* @import '~@fortawesome/fontawesome-free/css/all.min.css'; */
+/* @import '~@fortawesome/fontawesome-free/css/all.min.css'; */
+/* @import 'phosphor-icons/src/css/phosphor.css'; */
+*{
+    /* position: relative; */
+    /* overflow-y: hidden; */
+
+/* font-size: 0.75rem; */
+font-style: arial;
+.icon-btn i,
+.menu-link i,
+.settings-icon i{
+  color: #6c757d; /* Bootstrap's gray color */
+  transition: color 0.2s ease;     
+}
+
+line-height: 1.125rem;
+}/* Global Webkit Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(205 213 224);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background:rgb(205 213 224);
+  border-radius: 4px;
+  border: 2px solid #f8fafc;
+}
+            
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background: rgb(205 213 224);
+}       
+::-webkit-scrollbar-corner {
+  background: #f8fafc;
+}
+
+/* Firefox Scrollbar Styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(205 213 224) #f8fafc;
+}

@@ -1,0 +1,59 @@
+<div class="report-container">
+
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <h2>{{ title }}</h2>
+
+  <form #form="ngForm" (ngSubmit)="generate(form)" novalidate>
+
+    <div class="filter-grid">
+
+      <div class="field">
+        <label>From Date</label>
+        <input
+          type="date"
+          name="fromDate"
+          [(ngModel)]="fromDate"
+          required
+          #fromCtrl="ngModel">
+        <small class="error" *ngIf="fromCtrl.touched && fromCtrl.invalid">
+          From date is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>To Date</label>
+        <input
+          type="date"
+          name="toDate"
+          [(ngModel)]="toDate"
+          required
+          #toCtrl="ngModel">
+        <small class="error" *ngIf="toCtrl.touched && toCtrl.invalid">
+          To date is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>Export Format</label>
+        <select
+          name="exportType"
+          [(ngModel)]="exportType"
+          required>
+          <option value="csv">CSV</option>
+          <option value="excel">Excel</option>
+          <option value="pdf">PDF</option>
+        </select>
+      </div>
+
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Generating...' : 'Download Report' }}
+    </button>
+
+    <p class="status success" *ngIf="message">{{ message }}</p>
+
+  </form>
+
+</div>

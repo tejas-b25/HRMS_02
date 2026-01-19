@@ -1,0 +1,183 @@
+<div class="container my-4">
+  <div class="d-flex align-items-center mb-3">
+    <button class="btn btn-danger me-3" (click)="back()">← Back</button>
+    <h4 class="mb-0">Manage Leave Requests</h4>
+  </div>
+
+  <div class="card shadow-sm mb-5">
+    <div class="card-body p-4">
+      <form id="leave-request-form" #leaveForm="ngForm" (ngSubmit)="saveRequest(leaveForm)" novalidate>
+
+        <div class="mb-3">
+          <label class="form-label">Employee</label>
+          <input
+            type="text"
+            name="employeeName"
+            class="form-control"
+            placeholder="Enter employee name"
+            required
+            pattern="^[a-zA-Z ]+$"
+            ngModel
+            #employeeNameCtrl="ngModel" />
+
+          <small class="text-danger" *ngIf="employeeNameCtrl.touched && employeeNameCtrl.errors?.['required']">
+            Employee name is required
+          </small>
+          <small class="text-danger" *ngIf="employeeNameCtrl.touched && employeeNameCtrl.errors?.['pattern']">
+            Only alphabets allowed
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label">Leave Type</label>
+            <select
+              name="type"
+              class="form-select"
+              required
+              ngModel
+              #typeCtrl="ngModel">
+              <option value="">Select leave type</option>
+              <option>Annual</option>
+              <option>Casual</option>
+              <option>Sick</option>
+            </select>
+
+            <small class="text-danger" *ngIf="typeCtrl.touched && typeCtrl.invalid">
+              Leave type is required
+            </small>
+          </div>
+
+          <div class="col">
+            <label class="form-label">Total Days</label>
+            <input
+              type="number"
+              name="totalDays"
+              class="form-control"
+              placeholder="Enter total days"
+              required
+              min="1"
+              ngModel
+              #totalDaysCtrl="ngModel" />
+
+            <small class="text-danger" *ngIf="totalDaysCtrl.touched && totalDaysCtrl.errors?.['required']">
+              Total days required
+            </small>
+            <small class="text-danger" *ngIf="totalDaysCtrl.touched && totalDaysCtrl.errors?.['min']">
+              Must be at least 1 day
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label">Start Date</label>
+            <input
+              type="date"
+              name="start"
+              class="form-control"
+              required
+              ngModel
+              #startCtrl="ngModel" />
+
+            <small class="text-danger" *ngIf="startCtrl.touched && startCtrl.invalid">
+              Start date required
+            </small>
+          </div>
+
+          <div class="col">
+            <label class="form-label">End Date</label>
+            <input
+              type="date"
+              name="end"
+              class="form-control"
+              required
+              ngModel
+              #endCtrl="ngModel" />
+
+            <small class="text-danger" *ngIf="endCtrl.touched && endCtrl.errors?.['required']">
+              End date required
+            </small>
+            <small class="text-danger" *ngIf="endCtrl.touched && dateRangeError">
+              End date must be after start date
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Reason</label>
+          <textarea
+            name="reason"
+            class="form-control"
+            rows="2"
+            placeholder="Enter reason"
+            required
+            pattern="^[a-zA-Z ]+$"
+            ngModel
+            #reasonCtrl="ngModel"></textarea>
+
+          <small class="text-danger" *ngIf="reasonCtrl.touched && reasonCtrl.errors?.['required']">
+            Reason required
+          </small>
+          <small class="text-danger" *ngIf="reasonCtrl.touched && reasonCtrl.errors?.['pattern']">
+            Only alphabets allowed
+          </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="leaveForm.invalid">
+          Save Request
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-primary">
+            <tr>
+              <th>ID</th>
+              <th>Employee</th>
+              <th>Type</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Total Days</th>
+              <th>Status</th>
+              <th>Reason</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="leaveRequests.length === 0">
+              <td colspan="9" class="text-center text-muted">No leave requests found</td>
+            </tr>
+
+            <tr *ngFor="let lr of leaveRequests">
+              <td>{{ lr.id }}</td>
+              <td>{{ lr.employee }}</td>
+              <td>{{ lr.type }}</td>
+              <td>{{ lr.start }}</td>
+              <td>{{ lr.end }}</td>
+              <td>{{ lr.totalDays }}</td>
+              <td>
+                <span class="badge"
+                  [class.bg-success]="lr.status==='Approved'"
+                  [class.bg-warning]="lr.status==='Pending'"
+                  [class.bg-danger]="lr.status==='Rejected'">
+                  {{ lr.status }}
+                </span>
+              </td>
+              <td>{{ lr.reason }}</td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="viewRequest(lr)">View</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteRequest(lr.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

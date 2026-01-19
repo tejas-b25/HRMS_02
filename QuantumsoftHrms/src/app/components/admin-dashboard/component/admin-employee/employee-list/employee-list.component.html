@@ -1,0 +1,75 @@
+<div class="employee-list-container p-3">
+
+  <h2>Employees</h2>
+
+  <div class="mb-3 d-flex justify-content-between">
+    <input
+      type="text"
+      class="form-control w-50"
+      placeholder="Search employees"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearch()"
+    />
+
+    <button class="btn btn-primary" (click)="addEmployee()">
+      + Add Employee
+    </button>
+  </div>
+
+  <div *ngIf="loading">Loading...</div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <table
+    class="table table-striped"
+    *ngIf="!loading && filteredEmployees.length"
+  >
+    <thead>
+      <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Designation</th>
+        <th>Status</th>
+        <th style="width: 150px">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let emp of filteredEmployees">
+        <!-- ✅ DB PRIMARY KEY -->
+        <td>{{ emp.employeeId }}</td>
+
+        <td>{{ emp.firstName }} {{ emp.lastName }}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.department }}</td>
+        <td>{{ emp.designation }}</td>
+        <td>{{ emp.status }}</td>
+
+        <td>
+          <button
+            class="btn btn-sm btn-outline-primary me-2"
+            (click)="editEmployee(emp)"
+          >
+            Edit
+          </button>
+
+          <button
+            class="btn btn-sm btn-outline-danger"
+            (click)="deleteEmployee(emp)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !filteredEmployees.length">
+    No employees found.
+  </div>
+
+</div>

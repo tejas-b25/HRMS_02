@@ -1,0 +1,19 @@
+<div class="container">
+  <h3>Read Status</h3>
+
+  <table class="table" *ngIf="!loading">
+    <tr>
+      <th>User</th>
+      <th>Read</th>
+      <th>Read At</th>
+      <th>Acknowledged</th>
+    </tr>
+
+    <tr *ngFor="let s of statuses">
+      <td>{{ s.userId }}</td>
+      <td>{{ s.readAt ? 'Yes' : 'No' }}</td>
+      <td>{{ s.readAt || '-' }}</td>
+      <td>{{ s.acknowledged ? 'Yes' : 'No' }}</td>
+    </tr>
+  </table>
+</div>

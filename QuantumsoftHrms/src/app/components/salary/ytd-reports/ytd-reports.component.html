@@ -1,0 +1,43 @@
+<div class="ytd-container">
+  <!-- 🔘 Tabs and Dropdown Row -->
+  <div class="header-row">
+    <!-- Tabs -->
+    <div class="toggle-switch">
+      <button
+        class="toggle-option"
+        [class.active]="selectedTab === 'ytd'" 
+        (click)="selectTab('ytd')"
+      > YTD Statement
+      </button>
+      <button
+        class="toggle-option"
+        [class.active]="selectedTab === 'pf'"
+        (click)="selectTab('pf')" 
+      >PF YTD Statement
+      </button>  
+    </div>
+    <select [(ngModel)]="selectedYear" class="year-dropdown">
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+  </div>                 
+  <div *ngIf="selectedTab ==='ytd'" class="content-box">
+    <div class="empty-state">
+      <img src="https://linckia.cdn.greythr.com/assets/empty-payslip-state.svg" alt="">
+      <p>
+        Hi, looks like your YTD statement  has not been generated yet. Drop by later and we will have it ready for
+        you.
+      </p>
+    </div>
+  </div>  
+   <div *ngIf="selectedTab ==='pf'" class="content-box">
+    <div class="empty-state">
+      <p>
+       It looks like your YTD statement  has not been generated yet. Drop by later and we will have it ready for
+        you.
+      </p>
+    </div>
+  </div>
+</div>
+<footer>
+    <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+</footer>

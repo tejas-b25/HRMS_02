@@ -1,0 +1,73 @@
+<!-- tasks.component.html -->
+<div class="tasks-container">
+  <h2>Tasks</h2>
+  
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="tasks.length === 0 && !showForm">
+    <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_3.svg" alt="No tasks illustration">
+    <p class="empty-message">You haven't added any tasks yet!<br>Start by creating new tasks or configuring checklists.</p>
+    <button class="add-btn primary-btn" (click)="toggleForm()">Add new task</button>
+  </div>
+
+  <!-- Add Task Button (shown when there are tasks) -->
+  <button *ngIf="tasks.length > 0 && !showForm" class="add-btn primary-btn" (click)="toggleForm()">+ Add New Task</button>
+
+  <!-- Add Task Form -->
+  <div *ngIf="showForm" class="add-form">
+    <h3>Add New Task</h3>
+    <label>Task Title:</label>
+    <input type="text" [(ngModel)]="newTask.title" placeholder="Enter task title" />
+
+    <label>Description:</label>
+    <textarea [(ngModel)]="newTask.description" placeholder="Enter task details" rows="3"></textarea>
+
+    <label>Due Date:</label>
+    <input type="date" [(ngModel)]="newTask.dueDate" />
+
+    <label>Priority:</label>
+    <select [(ngModel)]="newTask.priority">
+      <option value="Low">Low</option>
+      <option value="Normal" selected>Normal</option>
+      <option value="High">High</option>
+    </select>
+
+    <div class="btn-group">
+      <button class="save-btn" (click)="addTask()">Add Task</button>
+      <button class="cancel-btn" (click)="toggleForm()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Task List -->
+  <div *ngIf="tasks.length > 0" class="task-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; let i = index">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.dueDate }}</td>
+          <td>
+            <span class="priority-badge" [class]="task.priority?.toLowerCase()">
+              {{ task.priority }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge">{{ task.status || 'Pending' }}</span>
+          </td>
+          <td>
+            <button class="delete-btn" (click)="deleteTask(i)">✖</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

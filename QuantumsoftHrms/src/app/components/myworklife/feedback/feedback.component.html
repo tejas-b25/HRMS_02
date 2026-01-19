@@ -1,0 +1,169 @@
+<!-- <p>feedback works!</p> -->
+<div class="feedback-container">
+  <!-- Header Tabs -->
+  <div class="header">
+    <div class="tabs">
+      <button 
+        *ngFor="let tab of tabs"
+        (click)="setActiveTab(tab)"
+        [class.active]="activeTab === tab">
+        {{ tab }}
+      </button>
+    </div>
+
+    <div class="actions">
+      <button class="btn secondary" (click)="openRequestModal()">Request Feedback</button>
+      <button class="btn primary" (click)="openGiveModal()">Give Feedback</button>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="content" *ngIf="!showRequestModal && !showGiveModal">
+
+    <div *ngIf="activeTab === 'Received'" class="empty-state">
+      <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_65.svg" alt="">
+      <h3>No feedback received yet.</h3>
+    </div>
+
+    <div *ngIf="activeTab === 'Given'">
+      <!-- <h3>Given Feedback</h3> -->
+      <div *ngIf="givenFeedbacks.length === 0" class="empty-state">
+      <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_65.svg" alt="">
+
+        <p>No feedback given yet.</p>
+      </div>
+      <ul *ngIf="givenFeedbacks.length > 0" class="request-list">
+        <li *ngFor="let feedback of givenFeedbacks">
+          <strong>{{ feedback.employee }}</strong>
+          <p>{{ feedback.message }}</p>
+          <span class="status given">Given</span>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="activeTab === 'Pending Requests'">
+      <!-- <h3>Pending Requests</h3> -->
+      <div *ngIf="pendingRequests.length === 0" class="empty-state">
+        <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_45.svg" alt="">
+        <p>No pending requests.</p>
+      </div>
+      <ul *ngIf="pendingRequests.length > 0" class="request-list">
+        <li *ngFor="let req of pendingRequests">
+          <strong>{{ req.employee }}</strong>
+          <p>{{ req.message }}</p>
+          <span class="status pending">Pending</span>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="activeTab === 'Drafts'">
+      <!-- <h3>Drafts</h3> -->
+      <div *ngIf="draftRequests.length === 0" class="empty-state">
+        <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_36.svg" alt="">
+        <p>No drafts available.</p>
+      </div>
+      <ul *ngIf="draftRequests.length > 0" class="request-list">
+        <li *ngFor="let draft of draftRequests">
+          <strong>{{ draft.employee }}</strong>
+          <p>{{ draft.message }}</p>
+          <span class="status draft">Draft</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showRequestModal">
+    <div class="modal-form">
+      <div class="modal-header">
+        <h3>Request Feedback</h3>
+        <button class="close-btn" (click)="closeRequestModal(true)">✕</button>
+      </div>
+
+      <form #feedbackForm="ngForm" (ngSubmit)="submitRequest()">
+        <div class="modal-body">
+          <label>Search Employee <span class="required">*</span></label>
+          <div class="search-input">
+            <span class="icon">👤</span>
+            <input
+              type="text"
+              name="employeeSearch"
+              [(ngModel)]="employeeSearch"
+              required
+              placeholder="Search by Emp No. / Name"
+            />
+          </div>
+
+          <label>Include a personalised message <span class="required">*</span></label>
+          <div class="message-box">
+            <div class="toolbar">
+              <button type="button"><b>B</b></button>
+              <button type="button"><i>I</i></button>
+              <button type="button"><u>U</u></button>
+              <button type="button">•</button>
+              <button type="button">1.</button>
+            </div>
+            <textarea
+              name="message"
+              [(ngModel)]="message"
+              required
+              placeholder="Type your message here...."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn cancel" (click)="closeRequestModal(true)">Cancel</button>
+          <button type="submit" class="btn primary" [disabled]="feedbackForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showGiveModal">
+    <div class="modal-form">
+      <div class="modal-header">
+        <h3>Give Feedback</h3>
+        <button class="close-btn" (click)="closeGiveModal(true)">✕</button>
+      </div>
+
+      <form #giveForm="ngForm" (ngSubmit)="submitGivenFeedback()">
+        <div class="modal-body">
+          <label>Search Employee <span class="required">*</span></label>
+          <div class="search-input">
+            <span class="icon">👤</span>
+            <input
+              type="text"
+              name="employeeSearch"
+              [(ngModel)]="employeeSearch"
+              required
+              placeholder="Search by Emp No. / Name"
+            />
+          </div>
+
+          <label>Your Feedback <span class="required">*</span></label>
+          <div class="message-box">
+            <div class="toolbar">
+              <button type="button"><b>B</b></button>
+              <button type="button"><i>I</i></button>
+              <button type="button"><u>U</u></button>
+              <button type="button">•</button>
+              <button type="button">1.</button>
+            </div>
+            <textarea
+              name="message"
+              [(ngModel)]="message"
+              required
+              placeholder="Type your feedback here...."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn cancel" (click)="closeGiveModal(true)">Cancel</button>
+          <button type="submit" class="btn primary" [disabled]="giveForm.invalid">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

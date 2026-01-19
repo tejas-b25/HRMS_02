@@ -1,0 +1,124 @@
+<div class="leave-type-container container mt-4">
+
+  <h2 class="text-center mb-3">Leave Type Management</h2>
+
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5>{{ isEditMode ? 'Edit Leave Type' : 'Add Leave Type' }}</h5>
+      <button *ngIf="isEditMode" class="btn btn-sm btn-secondary" (click)="cancelEdit()">
+        Cancel
+      </button>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="leaveTypeForm" (ngSubmit)="onSubmit()">
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Name <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Enter leave type name">
+
+            <small class="text-danger" *ngIf="name?.touched && name?.invalid">
+              <span *ngIf="name?.errors?.['required']">Name is required</span>
+              <span *ngIf="name?.errors?.['pattern']">Only alphabets allowed</span>
+            </small>
+          </div>
+
+          <div class="col-md-6">
+            <label>Annual Limit <span class="text-danger">*</span></label>
+            <input
+              type="number"
+              class="form-control"
+              formControlName="annualLimit"
+              placeholder="Enter annual limit">
+
+            <small class="text-danger" *ngIf="annualLimit?.touched && annualLimit?.invalid">
+              <span *ngIf="annualLimit?.errors?.['required']">Required</span>
+              <span *ngIf="annualLimit?.errors?.['min']">Must be 0 or greater</span>
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Description</label>
+          <textarea
+            class="form-control"
+            rows="2"
+            formControlName="description"
+            placeholder="Optional description">
+          </textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <input type="checkbox" formControlName="carryForward"> Carry Forward
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" formControlName="encashable"> Encashable
+          </div>
+          <div class="col-md-4">
+            <input type="checkbox" formControlName="isActive"> Active
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button class="btn btn-primary" type="submit" [disabled]="leaveTypeForm.invalid">
+            {{ isEditMode ? 'Update' : 'Save' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h5>Leave Types</h5>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Annual Limit</th>
+            <th>Status</th>
+            <th width="150">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lt of leaveTypes">
+            <td>{{ lt.name }}</td>
+            <td>{{ lt.annualLimit }}</td>
+            <td>
+              <span class="badge" [ngClass]="lt.isActive ? 'bg-success' : 'bg-secondary'">
+                {{ lt.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editLeaveType(lt)">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteLeaveType(lt)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<div class="container p-0">
+  <div class="d-flex justify-start mb-2">
+    <button class="btn btn-outline-danger" (click)="onBack()">← Back</button>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-body p-4">
+      <h4 class="card-title">Register User</h4>
+
+      <!-- TOP RED ERROR ALERT -->
+      <div *ngIf="errorSummary" class="alert alert-danger error-summary" role="alert" aria-live="assertive">
+        {{ errorSummary }}
+      </div>
+
+      <form id="register-form" [formGroup]="registerForm" (ngSubmit)="onSave()">
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" formControlName="username" placeholder="Enter username" />
+          <div *ngIf="submitted && f['username'].errors" class="text-danger small mt-1">
+            <div *ngIf="f['username'].errors['required']">Username is required</div>
+            <div *ngIf="f['username'].errors['minlength']">Minimum 3 characters</div>
+            <div *ngIf="f['username'].errors['maxlength']">Maximum 30 characters</div>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="Enter password" />
+          <div *ngIf="submitted && f['password'].errors" class="text-danger small mt-1">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="Enter email" />
+          <div *ngIf="submitted && f['email'].errors" class="text-danger small mt-1">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Invalid email format</div>
+          </div>
+        </div>
+
+        <!-- First / Last -->
+        <div class="row mb-3">
+          <div class="col">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" formControlName="firstName" placeholder="First name" />
+          </div>
+          <div class="col">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" formControlName="lastName" placeholder="Last name" />
+          </div>
+        </div>
+
+
+<!-- Role -->
+<div class="mb-3">
+  <label class="form-label">Role</label>
+  <select class="form-control" formControlName="role">
+    <option value="" disabled selected>Select role</option>
+    <option *ngFor="let r of roles" [value]="r.value">{{ r.view }}</option>
+  </select>
+
+  <div *ngIf="submitted && f['role'].errors" class="text-danger small mt-1">
+    <div *ngIf="f['role'].errors['required']">Role is required</div>
+  </div>
+</div>
+
+
+        <!-- Buttons -->
+        <div class="d-flex justify-end">
+          <button type="submit" class="btn btn-primary me-2">Register</button>
+          <button type="button" class="btn btn-secondary" (click)="onClear()">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Existing form code here -->
+<hr class="my-4" />
+
+<h4>User List</h4>
+
+<!-- Search -->
+<div class="mb-3">
+  <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Search users..." />
+</div>
+
+<table class="table table-hover mt-3">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+      <!-- <th>Actions</th> -->
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let u of filteredUsers; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.firstName }} {{ u.lastName }}</td>
+      <td>{{ u.role }}</td>
+      <td>
+        <span class="badge" [ngClass]="u.status === 'ACTIVE' ? 'bg-success' : 'bg-danger'">
+          {{ u.status }}
+        </span>
+      </td>
+
+      <!-- <td>
+        <button class="btn btn-sm btn-primary me-2" (click)="onEdit(u)">Edit</button>
+        <button class="btn btn-sm btn-danger" (click)="onDelete(u)">Delete</button>
+      </td> -->
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="filteredUsers.length === 0" class="text-muted">
+  No users found.
+</div>

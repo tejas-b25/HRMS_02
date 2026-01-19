@@ -1,0 +1,37 @@
+<div class="kudos-container">
+   
+  <div class="tabs">
+    <button 
+      [class.active]="activeTab === 'received'"
+      (click)="setTab('received')">
+      Received
+    </button>
+    <button 
+      [class.active]="activeTab === 'given'"
+      (click)="setTab('given')">
+      Given
+    </button>
+  </div>
+  <hr class="divider" />   
+  <div class="content" *ngIf="activeTab === 'received'">
+    <div class="empty-state">
+      <div class="icon-circle">
+        <div class="thumb">👍</div>
+      </div>
+      <h3>Get going!</h3>
+      <p>All the Kudos you have received will appear here.</p>
+      <button class="primary-btn"routerLink="/app/engage">Go to Engage</button>
+    </div>
+  </div>
+
+  <div class="content" *ngIf="activeTab === 'given'">
+    <div class="empty-state">
+      <div class="icon-circle">
+        <div class="thumb">👏</div>
+      </div>
+      <h3>Nothing here yet!</h3>
+      <p>All the Kudos you have given will appear here.</p>
+      <button class="primary-btn"routerLink="/engage">Go to Engage</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="tax-container">
+
+  <h2>Tax Configuration</h2>
+
+  <form #taxForm="ngForm" (ngSubmit)="submit(taxForm)" novalidate>
+
+    <div class="field">
+      <label>Regime Type *</label>
+      <select
+        name="regimeType"
+        [(ngModel)]="formData.regimeType"
+        required
+        #regimeType="ngModel">
+        <option value="" disabled>Select regime type</option>
+        <option value="OLD">OLD</option>
+        <option value="NEW">NEW</option>
+      </select>
+
+      <div class="error" *ngIf="regimeType.touched && regimeType.errors?.['required']">
+        Regime type is required
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Rebate Limit *</label>
+      <input
+        type="number"
+        name="rebateLimit"
+        placeholder="Enter rebate limit (e.g. 50000)"
+        [(ngModel)]="formData.rebateLimit"
+        required
+        min="0"
+        #rebateLimit="ngModel">
+
+      <div class="error" *ngIf="rebateLimit.touched && rebateLimit.errors?.['required']">
+        Rebate limit is required
+      </div>
+
+      <div class="error" *ngIf="rebateLimit.touched && rebateLimit.errors?.['min']">
+        Rebate limit cannot be negative
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Exemption Rules (JSON)</label>
+      <textarea
+        rows="4"
+        name="exemptionRules"
+        placeholder='Example: {"section80C":150000}'
+        [(ngModel)]="formData.exemptionRules">
+      </textarea>
+    </div>
+
+    <div class="field">
+      <label>Effective From *</label>
+      <input
+        type="date"
+        name="effectiveFrom"
+        [(ngModel)]="formData.effectiveFrom"
+        required
+        #effectiveFrom="ngModel">
+
+      <div class="error" *ngIf="effectiveFrom.touched && effectiveFrom.errors?.['required']">
+        Effective from date is required
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" [disabled]="loading">
+        {{ isEdit ? 'Update' : 'Create' }}
+      </button>
+
+      <button type="button" class="secondary" (click)="reset(taxForm)">
+        Reset
+      </button>
+    </div>
+
+  </form>
+
+  <div class="alert success" *ngIf="success">{{ success }}</div>
+  <div class="alert error" *ngIf="error">{{ error }}</div>
+
+  <hr />
+
+  <h3>Existing Configurations</h3>
+
+  <table *ngIf="configs.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Regime</th>
+        <th>Rebate</th>
+        <th>Effective From</th>
+        <th>Created</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let c of configs">
+        <td>{{ c.taxConfigId }}</td>
+        <td>{{ c.regimeType }}</td>
+        <td>{{ c.rebateLimit }}</td>
+        <td>{{ c.effectiveFrom }}</td>
+        <td>{{ c.createdAt | date:'short' }}</td>
+        <td>
+          <button class="edit" (click)="edit(c)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="empty" *ngIf="!configs.length">
+    No tax configurations found
+  </p>
+
+</div>

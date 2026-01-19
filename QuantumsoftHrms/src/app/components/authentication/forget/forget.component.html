@@ -1,0 +1,60 @@
+<section class="forget-section">
+
+  <div class="forget-container">
+
+    <div class="logo">
+      <img src="/assets/logo.png" alt="Company Logo">
+    </div>
+
+    <h2>Password Recovery</h2>
+    <p class="subtitle">
+      Enter your registered email address to receive a password reset link.
+    </p>
+
+    <form (ngSubmit)="onSubmit()" #forgetForm="ngForm" novalidate>
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email address"
+        [(ngModel)]="email"
+        required
+        email
+        #emailField="ngModel"
+      >
+
+      <div class="error-msg"
+           *ngIf="emailField.invalid && (emailField.touched || emailField.dirty)">
+        <div *ngIf="emailField.errors?.['required']">
+          Email is required
+        </div>
+        <div *ngIf="emailField.errors?.['email']">
+          Enter a valid email address
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="forgetForm.invalid">
+        Send Reset Link
+      </button>
+
+    </form>
+
+    <div *ngIf="message"
+         class="response-msg"
+         [style.color]="messageColor">
+      {{ message }}
+    </div>
+
+    <div class="back-section">
+      <button type="button" class="back-btn" (click)="goBackToLogin()">
+        ← Back to Login
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+<footer>
+  <p>v6.3.0-prod-1490 | Privacy Policy | Terms of Service</p>
+</footer>

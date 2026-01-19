@@ -1,0 +1,25 @@
+<div class="regularization-container">
+  <div class="toggle-container">
+    <button class="toggle-btn" [class.active]="selectedTab === 'active'"
+      (click)="selectedTab = 'active'">Active</button>
+    <button class="toggle-btn" [class.active]="selectedTab === 'closed'"
+      (click)="selectedTab = 'closed'">Closed</button>
+  </div>
+
+  <div class="filters-row">
+    <input type="date" placeholder="Select date range" />
+
+    <div class="searchbox">
+      <input type="text" placeholder="Search Employee" [(ngModel)]="searchText" (input)="filterEmployees()" />
+      <i class="fa fa-search"></i>
+    </div>
+  </div>
+
+
+  <div class="surface">
+    <div class="empty">
+      <img src="https://linckia.cdn.greythr.com/assets/review-list-empty.svg" alt="">
+      <p>No confirmation Items for Permission</p>
+    </div>
+  </div>
+</div>

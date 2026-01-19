@@ -1,0 +1,99 @@
+<div class="directory-container">
+
+  <div class="top-bar">
+    <div class="tabs">
+      <button [class.active]="activeTab === 'starred'" (click)="switchTab('starred')">⭐ Starred</button>
+      <button [class.active]="activeTab === 'everyone'" (click)="switchTab('everyone')">👥 Everyone</button>
+    </div>
+    <button class="add-btn" (click)="toggleAddForm()">
+      {{ showAddForm ? '✖ Close Form' : '+ Add Employee' }}
+    </button>
+  </div>
+
+  <div *ngIf="showAddForm" class="add-form animate-slide">
+    <h3>➕ Add Employee</h3>
+    <input type="text" placeholder="Employee ID" [(ngModel)]="newEmployee.id" />
+    <input type="text" placeholder="Name" [(ngModel)]="newEmployee.name" />
+    <input type="text" placeholder="Designation" [(ngModel)]="newEmployee.designation" />
+    <input type="text" placeholder="Location" [(ngModel)]="newEmployee.location" />
+    <label>Joining Date:</label>
+    <input type="date" [(ngModel)]="newEmployee.joiningDate" />
+    <label>Date of Birth:</label>
+    <input type="date" [(ngModel)]="newEmployee.dob" />
+    <label class="star-label">
+      <input type="checkbox" [(ngModel)]="newEmployee.isStarred" />
+      ⭐ Star this employee
+    </label>
+    <button (click)="addEmployee()">Add Employee</button>
+  </div>
+
+  <div class="directory-section">
+    <div class="employee-list">
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="🔍 Search by name or ID..."
+          [(ngModel)]="searchText"
+          (input)="searchEmployee()"
+        />
+      </div>
+
+      <div *ngIf="!showResults && activeTab === 'everyone'" class="empty-msg">
+        <p>Start typing to find an employee</p>
+      </div>
+
+      <div *ngIf="showResults">
+        <div *ngIf="filteredEmployees.length === 0" class="empty-msg">
+          <p>No records found</p>
+        </div>
+
+        <div
+          *ngFor="let emp of filteredEmployees"
+          (click)="selectEmployee(emp)"
+          class="employee-card"
+          [class.selected]="selectedEmployee?.id === emp.id"
+        >
+          <div class="emp-avatar">{{ emp.name[0] }}</div>
+          <div>
+            <h4>{{ emp.name }}</h4>
+            <p>{{ emp.designation }}</p>
+            <small>ID: {{ emp.id }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="employee-details" *ngIf="selectedEmployee; else noSelection">
+      <div class="emp-profile">
+        <div class="emp-avatar big">{{ selectedEmployee.name[0] }}</div>
+        <h3>{{ selectedEmployee.name }}</h3>
+        <p class="designation">{{ selectedEmployee.designation }}</p>
+        <span class="emp-id">Employee ID: {{ selectedEmployee.id }}</span>
+      </div>
+
+      <div class="info-section">
+        <h5>📍 Location</h5>
+        <p>{{ selectedEmployee.location }}</p>
+
+        <h5>🗂️ Designation</h5>
+        <p>{{ selectedEmployee.designation }}</p>
+
+        <h5>📅 Joining Date</h5>
+        <p>{{ selectedEmployee.joiningDate }}</p>
+
+        <h5>🎂 Date of Birth</h5>
+        <p>{{ selectedEmployee.dob }}</p>
+      </div>
+    </div>
+
+    <ng-template #noSelection>
+      <div class="empty-state">
+        <p>Select an employee to view details 👇</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<footer>
+    <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+</footer>

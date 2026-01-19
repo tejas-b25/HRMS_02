@@ -1,0 +1,124 @@
+<div class="container shift-container">
+
+  <h2>👤 Shift Assignment</h2>
+
+  <div class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Employee ID</label>
+        <input
+          type="number"
+          placeholder="Enter employee ID"
+          [(ngModel)]="assignment.employeeId"
+          required
+          #empCtrl="ngModel">
+
+        <small class="error" *ngIf="empCtrl.touched && empCtrl.invalid">
+          Employee ID is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>Shift ID</label>
+        <input
+          type="number"
+          placeholder="Enter shift ID"
+          [(ngModel)]="assignment.shiftId"
+          required
+          #shiftCtrl="ngModel">
+
+        <small class="error" *ngIf="shiftCtrl.touched && shiftCtrl.invalid">
+          Shift ID is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>Effective From</label>
+        <input
+          type="date"
+          [(ngModel)]="assignment.effectiveFromDate"
+          required
+          #fromCtrl="ngModel">
+
+        <small class="error" *ngIf="fromCtrl.touched && fromCtrl.invalid">
+          From date is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>Effective To</label>
+        <input
+          type="date"
+          [(ngModel)]="assignment.effectiveToDate"
+          required
+          #toCtrl="ngModel">
+
+        <small class="error" *ngIf="toCtrl.touched && toCtrl.invalid">
+          To date is required
+        </small>
+
+        <small class="error"
+               *ngIf="assignment.effectiveFromDate && assignment.effectiveToDate
+               && assignment.effectiveToDate < assignment.effectiveFromDate">
+          To date must be same or after From date
+        </small>
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button
+        (click)="assign()"
+        [disabled]="!assignment.employeeId
+          || !assignment.shiftId
+          || !assignment.effectiveFromDate
+          || !assignment.effectiveToDate
+          || assignment.effectiveToDate < assignment.effectiveFromDate">
+
+        Assign Shift
+      </button>
+
+      <button
+        class="secondary"
+        (click)="loadByEmployee()"
+        [disabled]="!assignment.employeeId">
+
+        Get By Employee
+      </button>
+    </div>
+
+  </div>
+
+  <table *ngIf="assignments.length">
+    <thead>
+      <tr>
+        <th>Assignment ID</th>
+        <th>Employee ID</th>
+        <th>Shift ID</th>
+        <th>From Date</th>
+        <th>To Date</th>
+        <th>Assigned By</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let a of assignments">
+        <td>{{ a.shiftAssignmentId }}</td>
+        <td>{{ a.employeeId }}</td>
+        <td>{{ a.shiftId }}</td>
+        <td>{{ a.effectiveFromDate }}</td>
+        <td>{{ a.effectiveToDate }}</td>
+        <td>{{ a.assignedBy }}</td>
+        <td>
+          <span class="status" [class.active]="a.isActive">
+            {{ a.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,0 +1,121 @@
+<div class="feedback-wrapper">
+
+  <h2 class="page-title">360° Performance Feedback</h2>
+
+  <div class="feedback-form-card">
+
+    <h4>Give Feedback</h4>
+
+    <form #f="ngForm" (ngSubmit)="submitFeedback(f)">
+
+      <div class="form-grid">
+
+        <div>
+          <label>Employee ID *</label>
+          <input
+            type="number"
+            name="revieweeId"
+            [(ngModel)]="revieweeId"
+            placeholder="Enter employee ID"
+            required
+            min="1"
+            #empId="ngModel"
+            [class.invalid]="empId.touched && empId.invalid">
+          <small class="error" *ngIf="empId.touched && empId.invalid">
+            Valid employee ID required
+          </small>
+        </div>
+
+        <div>
+          <label>Employee Name *</label>
+          <input
+            type="text"
+            name="revieweeName"
+            [(ngModel)]="revieweeName"
+            placeholder="Enter employee name"
+            required
+            pattern="^[a-zA-Z ]+$"
+            #empName="ngModel"
+            [class.invalid]="empName.touched && empName.invalid">
+          <small class="error" *ngIf="empName.touched && empName.invalid">
+            Name must contain only letters
+          </small>
+        </div>
+
+        <div class="full">
+          <label>Comments *</label>
+          <textarea
+            rows="3"
+            name="comments"
+            [(ngModel)]="comments"
+            placeholder="Enter feedback comments"
+            required
+            minlength="5"
+            #cmt="ngModel"
+            [class.invalid]="cmt.touched && cmt.invalid"></textarea>
+          <small class="error" *ngIf="cmt.touched && cmt.invalid">
+            Minimum 5 characters required
+          </small>
+        </div>
+
+        <div>
+          <label>Rating (0 – 5) *</label>
+          <input
+            type="number"
+            name="rating"
+            [(ngModel)]="rating"
+            placeholder="e.g. 4.5"
+            required
+            min="0"
+            max="5"
+            step="0.1"
+            #rate="ngModel"
+            [class.invalid]="rate.touched && rate.invalid">
+          <small class="error" *ngIf="rate.touched && rate.invalid">
+            Rating must be between 0 and 5
+          </small>
+        </div>
+
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Submit Feedback
+      </button>
+
+    </form>
+  </div>
+
+  <div class="feedback-table-card">
+
+    <h4>All Feedback</h4>
+
+    <div *ngIf="loading" class="loading">Loading feedback...</div>
+
+    <table *ngIf="!loading && feedbackList.length">
+      <thead>
+        <tr>
+          <th>Reviewer</th>
+          <th>Employee</th>
+          <th>Rating</th>
+          <th>Comments</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of feedbackList">
+          <td>{{ f.reviewerName }}</td>
+          <td>{{ f.revieweeName }} ({{ f.revieweeId }})</td>
+          <td><span class="rating-badge">{{ f.rating }}</span></td>
+          <td>{{ f.comments }}</td>
+          <td>{{ f.createdAt | date:'medium' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!loading && !feedbackList.length" class="empty">
+      No feedback available
+    </p>
+
+  </div>
+
+</div>

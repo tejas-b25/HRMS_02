@@ -1,0 +1,104 @@
+<div class="home-container">
+  <div class="dashboard-grid">
+    <div class="card review-card">
+      <h3>Review</h3>
+      <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_6.svg" alt="Review"/> 
+      <p>Hurrah! You've nothing to review.</p>
+    </div> 
+    <div class="card time-card">  
+      <div class="time-header">
+        <div> 
+          <h3>{{ currentDate }}</h3>
+          <p>Thursday | 09:30 AM To 06:30 PM</p>
+        </div>                                        
+        <div class="status-dot" [class.active]="signedIn"></div>
+      </div>                                  
+      <div class="time-display">    
+        <h2>{{ currentTime }}</h2>                 
+      </div>    
+      <div class="time-footer">
+        <a href="#" class="link" (click)="openSwipeModal($event)">View Swipes</a>
+        <button class="signout-btn" (click)="toggleSign()">                
+          {{ signedIn ? 'Sign Out' : 'Sign In' }}
+        </button> 
+      </div> 
+    </div>                
+    <div class="card payslip-card">
+      <h3>Payslip</h3>
+      <img src="https://linckia.cdn.greythr.com/assets/gt_illustration_4.svg" alt="Payslip" />
+      <p>Uh oh! Your Payslip will show up here after the release of Payroll.</p>
+    </div>              
+  </div>                
+  <div class="bottom-row">
+    <div class="card holidays-card">  
+      <div class="card-header">
+        <h3>Upcoming Holidays</h3>
+        <a routerLink="/app/holiday" class="arrow-link">→</a>
+      </div>    
+      <ul>                  
+        <li><strong>21 Oct</strong> <span>Tuesday</span> – Diwali</li>
+        <li><strong>25 Dec</strong> <span>Thursday</span> – Christmas</li>
+      </ul>
+    </div>       
+    <div class="card quick-card">  
+      <h3>Quick Access</h3>
+      <ul>     
+        <li >
+          <a routerLink="/app/salary/payslips" routerLinkActive="active-link">
+            Reimbursement Payslip  
+          </a>
+        </li>                                        
+        <li>                  
+          <a routerLink="/app/salary/it-statements" routerLinkActive="active-link">
+            IT Statement
+          </a>
+        </li>
+        <li>
+          <a routerLink="/app/salary/Ytd-reports" routerLinkActive="active-link">
+            YTD Reports
+          </a>      
+        </li>
+        <li>                   
+          <a routerLink="/app/salary/loan-advances" routerLinkActive="active-link">
+            Loan Statement
+          </a>  
+        </li>                    
+      </ul>    
+      <div class="note"> 
+        Use quick access to view important salary details instantly.
+      </div>                                                            
+    </div>                     
+  </div> 
+  <div class="swipe-backdrop" *ngIf="showSwipeModal">
+    <div class="swipe-modal">
+      <div class="swipe-header">
+        <h3>Swipes</h3>     
+        <button class="close-btn" (click)="closeSwipeModal()">&#10006;</button>
+      </div>        
+      <div class="swipe-info">      
+        <p><strong>Date</strong> {{ currentDate }}</p>                                    
+        <p><strong>Shift Time</strong> 09:30 to 18:30</p>     
+        <p><strong>Shift Type</strong> GEN</p>
+      </div>                                
+      <table class="swipe-table">  
+        <thead>
+          <tr> 
+            <th>Swipe Time</th>         
+            <th>In/Out</th>           
+            <th>Door/Address</th>       
+          </tr>           
+        </thead>       
+        <tbody>
+          <tr *ngFor="let record of swipeRecords">  
+            <td>{{ record.time }}</td>
+            <td>{{ record.type }}</td>             
+            <td>{{ record.address }}</td>
+          </tr> 
+          <tr *ngIf="swipeRecords.length === 0">
+            <td colspan="3" class="no-records">No swipe records yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

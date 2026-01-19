@@ -1,0 +1,75 @@
+<div class="payroll-process-container p-3">
+
+  <h2>Payroll Processing</h2>
+
+  <div *ngIf="message" class="alert alert-success mt-2">
+    {{ message }}
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-2">
+    {{ error }}
+  </div>
+
+  <form [formGroup]="processForm" (ngSubmit)="submit()" class="mt-3">
+
+    <div class="mb-3">
+      <label class="form-label">Employee ID *</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="employeeId"
+        placeholder="Enter employee ID">
+
+      <small class="text-danger" *ngIf="employeeIdCtrl?.touched && employeeIdCtrl?.invalid">
+        Employee ID must be a valid number.
+      </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Month *</label>
+      <input
+        class="form-control"
+        formControlName="month"
+        placeholder="e.g. NOV-2027">
+
+      <small class="text-danger" *ngIf="monthCtrl?.touched && monthCtrl?.invalid">
+        Format must be MMM-YYYY (e.g. NOV-2027)
+      </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Structure ID *</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="structureId"
+        placeholder="Enter structure ID">
+
+      <small class="text-danger" *ngIf="structureIdCtrl?.touched && structureIdCtrl?.invalid">
+        Structure ID must be a valid number.
+      </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Bank Reference No *</label>
+      <input
+        class="form-control"
+        formControlName="bankReferenceNo"
+        placeholder="Enter bank reference number">
+
+      <small class="text-danger" *ngIf="bankRefCtrl?.touched && bankRefCtrl?.invalid">
+        Only letters and numbers allowed.
+      </small>
+    </div>
+
+    <button type="submit" class="btn btn-primary me-2" [disabled]="loading">
+      {{ loading ? 'Processing...' : 'Process Payroll' }}
+    </button>
+
+    <button type="button" class="btn btn-secondary" (click)="reset()">
+      Reset
+    </button>
+
+  </form>
+
+</div>

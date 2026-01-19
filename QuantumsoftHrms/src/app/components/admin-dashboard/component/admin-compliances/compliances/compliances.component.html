@@ -1,0 +1,154 @@
+<div class="container">
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card custom-card">
+
+        <div class="card-header">
+          <h4 *ngIf="!isEditMode">Add Compliance</h4>
+          <h4 *ngIf="isEditMode" class="text-warning">Edit Compliance</h4>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="complianceForm" (ngSubmit)="submitForm()">
+
+            <div class="row">
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Compliance Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="complianceName"
+                  placeholder="Enter compliance name (alphabets only)"
+                  [class.invalid]="complianceForm.get('complianceName')?.touched &&
+                                   complianceForm.get('complianceName')?.invalid">
+
+                <small class="error"
+                  *ngIf="complianceForm.get('complianceName')?.touched &&
+                         complianceForm.get('complianceName')?.invalid">
+                  Name must be 3–50 characters, alphabets only
+                </small>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Compliance Type</label>
+                <select
+                  class="form-select"
+                  formControlName="complianceType"
+                  [class.invalid]="complianceForm.get('complianceType')?.touched &&
+                                   complianceForm.get('complianceType')?.invalid">
+
+                  <option value="">Select compliance type</option>
+                  <option value="PF">PF</option>
+                  <option value="ESI">ESI</option>
+                  <option value="TDS">TDS</option>
+                  <option value="PT">PT</option>
+                  <option value="Gratuity">Gratuity</option>
+                  <option value="Other">Other</option>
+                </select>
+
+                <small class="error"
+                  *ngIf="complianceForm.get('complianceType')?.touched &&
+                         complianceForm.get('complianceType')?.invalid">
+                  Compliance type is required
+                </small>
+              </div>
+
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea
+                rows="3"
+                class="form-control"
+                formControlName="description"
+                placeholder="Enter description (minimum 10 characters)"
+                [class.invalid]="complianceForm.get('description')?.touched &&
+                                 complianceForm.get('description')?.invalid">
+              </textarea>
+
+              <small class="error"
+                *ngIf="complianceForm.get('description')?.touched &&
+                       complianceForm.get('description')?.invalid">
+                Description must be at least 10 characters
+              </small>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                formControlName="isActive">
+              <label class="form-check-label">Active</label>
+            </div>
+
+            <button class="btn btn-primary w-100"
+                    [disabled]="complianceForm.invalid">
+              {{ isEditMode ? 'Update Compliance' : 'Save Compliance' }}
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card custom-card">
+
+        <div class="card-header">
+          <h4>Registered Compliances</h4>
+        </div>
+
+        <div class="card-body table-responsive">
+
+          <table class="table table-bordered table-hover" *ngIf="!loading">
+            <thead class="table-dark">
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Active</th>
+                <th width="150">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let c of compliances">
+                <td>{{ c.complianceName }}</td>
+                <td>{{ c.complianceType }}</td>
+                <td>{{ c.description }}</td>
+                <td>
+                  <span class="badge bg-success" *ngIf="c.isActive">Yes</span>
+                  <span class="badge bg-danger" *ngIf="!c.isActive">No</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-warning btn-sm"
+                            (click)="editCompliance(c)">
+                      Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm"
+                            (click)="deleteCompliance(c.complianceId!)">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="!loading && compliances.length === 0"
+               class="alert alert-info">
+            No compliances found
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,52 @@
+h2{
+    color: rgb(92, 92, 175);
+    cursor: pointer;
+    
+    /* text-decoration:; */
+}
+
+.main{
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between;
+}
+.year-dropdown {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+  
+}
+
+.empty-state {
+  text-align: center;
+  color: #6b7280;
+  padding: 20px;
+}
+ footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #777;
+  font-size: 14px;
+}
+.empty-state p {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.content-box {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  height: 500px;   
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  
+}

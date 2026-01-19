@@ -1,0 +1,465 @@
+.holiday-container {
+  padding: 20px;
+  background: #f4f6fb;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filters input,
+.filters button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* ===== MONTH HOLIDAY SECTION ===== */
+.month-holidays {
+  margin: 20px 0;
+}
+
+.section-title {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Grid */
+.holiday-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+/* Card */
+.holiday-card {
+  background: white;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.holiday-card .date {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.holiday-card h3 {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.holiday-card .desc {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Meta */
+.meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.meta .region {
+  color: #374151;
+}
+
+/* Type badges */
+.meta .type {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.type.national { background: #bfdbfe; }
+.type.festival { background: #ddd6fe; }
+.type.optional { background: #fde68a; }
+.type.custom   { background: #bbf7d0; }
+
+/* Optional tag */
+.optional {
+  background: #fde68a;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+
+/* Calendar */
+.calendar-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day {
+  background: white;
+  min-height: 90px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.day.header {
+  background: #e0e7ff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.day.empty {
+  background: transparent;
+}
+
+.date-num {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.holiday {
+  background: #fde68a;
+  font-size: 11px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* Month Header */
+.month-header {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.month-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.nav-btn {
+  background: #eef2ff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+
+/* Container */
+.holiday-container {
+  padding: 20px;
+  background: #f4f6fb;
+}
+
+/* ===== UPCOMING HOLIDAYS AS CARDS ===== */
+
+.upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* Slight highlight for upcoming cards */
+.upcoming-card {
+  border-left: 4px solid #2563eb;
+}
+
+/* Optional: subtle hover effect */
+.upcoming-card:hover {
+  transform: translateY(-2px);
+  transition: 0.2s ease;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.legend-item {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.national { background: #bfdbfe; }
+.festival { background: #ddd6fe; }
+.optional { background: #fde68a; }
+.custom { background: #bbf7d0; }
+
+/* Calendar */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day {
+  background: white;
+  min-height: 90px;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.day.header {
+  background: #e0e7ff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.day.empty {
+  background: transparent;
+}
+
+.holiday {
+  font-size: 11px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+
+/* Holiday colors */
+.holiday.national { background: #bfdbfe; }
+.holiday.festival { background: #ddd6fe; }
+.holiday.optional { background: #fde68a; }
+.holiday.custom { background: #bbf7d0; }
+
+/* Month header */
+.month-header {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.month-title {
+  font-weight: 600;
+}
+
+/* Navigation */
+.nav-btn {
+  background: #eef2ff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+
+
+/* ===== FORCE MODAL ROOT ===== */
+.force-modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+}
+
+.force-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* ===== MODAL CARD ===== */
+.force-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  max-width: 92%;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  animation: slideUp 0.25s ease;
+}
+
+/* ===== HEADER ===== */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2937;
+}
+
+.close-btn {
+  font-size: 22px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.close-btn:hover {
+  color: #111827;
+}
+
+/* ===== FORM ===== */
+.modal-form {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Inputs */
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.modal-form textarea {
+  resize: none;
+  min-height: 70px;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79,70,229,0.15);
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 4px;
+}
+
+.checkbox-group input {
+  margin-right: 6px;
+}
+
+/* ===== ACTIONS ===== */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn.primary {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.btn.primary:hover {
+  background: #4338ca;
+}
+
+.btn.cancel {
+  background: #e5e7eb;
+}
+
+.btn.cancel:hover {
+  background: #d1d5db;
+}
+
+
+.invalid {
+  border: 2px solid #e53935 !important;
+  background: #fff5f5;
+}
+
+.error {
+  color: #e53935;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25,118,210,0.15);
+}
+
+
+/* ===== ANIMATION ===== */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}

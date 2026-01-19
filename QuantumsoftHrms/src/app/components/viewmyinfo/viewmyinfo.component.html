@@ -1,0 +1,44 @@
+<!-- <p>viewmyinfo works!</p> -->
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h2>My Profile</h2>
+    </div>
+    <div class="card-body">
+      <div class="profile-top">
+        <img *ngIf="employee.photoUrl"
+             [src]="employee.photoUrl"
+             [alt]="'Photo of ' + employee.name"
+             class="profile-photo" />
+      </div>
+      <div class="info-grid">
+        <div class="label">Name:</div>
+        <div class="value">{{ employee.name }}</div>
+
+        <div class="label">Designation:</div>
+        <div class="value">{{ employee.designation }}</div>
+
+        <div class="label">Qualification:</div>
+        <div class="value">{{ employee.qualification }}</div>
+
+        <div class="label">Department:</div>
+        <div class="value">{{ employee.department }}</div>
+
+        <div class="label">Email:</div>
+        <div class="value">{{ employee.email }}</div>
+
+        <div class="label">Phone:</div>
+        <div class="value">{{ employee.phone }}</div>
+
+        <div class="label">Employee ID:</div>
+        <div class="value">{{ employee.id }}</div>
+        
+      </div>
+      <div class="actions">
+       <button [routerLink]="['/edit']">Edit</button>
+       <button [routerLink]="['/update']">Update</button>
+       <!-- <app-edit-profile></app-edit-profile> -->
+      </div>
+    </div>
+  </div>
+</div>

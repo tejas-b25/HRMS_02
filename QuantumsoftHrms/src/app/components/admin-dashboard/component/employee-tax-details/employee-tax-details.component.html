@@ -1,0 +1,62 @@
+<div class="tax-container">
+  <h2>Employee Tax Declaration</h2>
+
+  <form [formGroup]="taxForm" (ngSubmit)="submit()">
+
+    <div class="form-group">
+      <label>Employee ID</label>
+      <input type="number" formControlName="employeeId" />
+    </div>
+
+    <div class="form-group">
+      <label>Tax Configuration ID</label>
+      <input type="number" formControlName="taxConfigId" />
+    </div>
+
+    <div class="form-group">
+      <label>Tax Regime</label>
+      <select formControlName="taxRegime">
+        <option value="">-- Select --</option>
+        <option value="OLD">Old Regime</option>
+        <option value="NEW">New Regime</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Declaration</label>
+      <textarea rows="3" formControlName="declarationText"></textarea>
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Saving...' : 'Save Tax Details' }}
+    </button>
+
+    <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+  </form>
+
+  <!-- TABLE -->
+  <table class="tax-table" *ngIf="taxList.length > 0">
+    <thead>
+      <tr>
+        <th>Tax ID</th>
+        <th>Regime</th>
+        <th>Declaration</th>
+        <th>Rebate Limit</th>
+        <th>Effective From</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let tax of taxList">
+        <td>{{ tax.taxId }}</td>
+        <td>{{ tax.taxRegime }}</td>
+        <td>{{ tax.declarationText }}</td>
+        <td>₹{{ tax.taxConfiguration.rebateLimit }}</td>
+        <td>{{ tax.taxConfiguration.effectiveFrom }}</td>
+        <td>{{ tax.lastUpdated | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

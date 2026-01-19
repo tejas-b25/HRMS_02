@@ -1,0 +1,143 @@
+<div class="kpi-page">
+
+  <div class="kpi-form-card">
+    <h3>{{ isEditMode ? 'Edit KPI' : 'Create KPI' }}</h3>
+
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+
+      <div class="form-row">
+
+        <div>
+          <label>Department ID *</label>
+          <input
+            type="number"
+            name="departmentId"
+            [(ngModel)]="form.departmentId"
+            placeholder="Enter department ID"
+            required
+            min="1"
+            #dept="ngModel"
+            [class.invalid]="dept.touched && dept.invalid">
+          <small *ngIf="dept.touched && dept.invalid" class="error">
+            Valid department ID required
+          </small>
+        </div>
+
+        <div>
+          <label>Role *</label>
+          <select
+            name="role"
+            [(ngModel)]="form.role"
+            required
+            #role="ngModel"
+            [class.invalid]="role.touched && role.invalid">
+            <option value="">Select role</option>
+            <option>EMPLOYEE</option>
+            <option>MANAGER</option>
+            <option>HR</option>
+            <option>ADMIN</option>
+          </select>
+          <small *ngIf="role.touched && role.invalid" class="error">
+            Role is required
+          </small>
+        </div>
+
+        <div>
+          <label>Weightage (%) *</label>
+          <input
+            type="number"
+            name="weightage"
+            [(ngModel)]="form.weightage"
+            placeholder="1 – 100"
+            required
+            min="1"
+            max="100"
+            #wt="ngModel"
+            [class.invalid]="wt.touched && wt.invalid">
+          <small *ngIf="wt.touched && wt.invalid" class="error">
+            Weightage must be 1–100
+          </small>
+        </div>
+
+      </div>
+
+      <div class="form-full">
+        <label>KPI Name *</label>
+        <input
+          name="kpiName"
+          [(ngModel)]="form.kpiName"
+          placeholder="Enter KPI name"
+          required
+          pattern="^[a-zA-Z ]+$"
+          #name="ngModel"
+          [class.invalid]="name.touched && name.invalid">
+        <small *ngIf="name.touched && name.invalid" class="error">
+          Only letters allowed
+        </small>
+      </div>
+
+      <div class="form-full">
+        <label>Description *</label>
+        <textarea
+          name="kpiDescription"
+          [(ngModel)]="form.kpiDescription"
+          placeholder="Enter KPI description"
+          required
+          minlength="5"
+          #desc="ngModel"
+          [class.invalid]="desc.touched && desc.invalid"></textarea>
+        <small *ngIf="desc.touched && desc.invalid" class="error">
+          Minimum 5 characters required
+        </small>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-save">
+          {{ isEditMode ? 'Update KPI' : 'Save KPI' }}
+        </button>
+
+        <button type="button" *ngIf="isEditMode" class="btn-cancel" (click)="reset(f)">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="kpi-table-card">
+
+    <h3>KPI Master List</h3>
+
+    <table *ngIf="kpis.length">
+      <thead>
+        <tr>
+          <th>KPI</th>
+          <th>Department</th>
+          <th>Role</th>
+          <th>Weightage</th>
+          <th class="action-col">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let k of kpis">
+          <td>
+            <strong>{{ k.kpiName }}</strong>
+            <div class="sub-text">{{ k.kpiDescription }}</div>
+          </td>
+          <td>{{ k.departmentId }}</td>
+          <td>{{ k.role }}</td>
+          <td>{{ k.weightage }}%</td>
+          <td class="action-col">
+            <button class="btn-edit" (click)="edit(k)">Edit</button>
+            <button class="btn-delete" (click)="delete(k.kpiId!)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!kpis.length" class="empty">No KPIs available</p>
+
+  </div>
+
+</div>

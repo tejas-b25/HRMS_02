@@ -1,0 +1,296 @@
+
+
+*{
+   font-family: Arial, sans-serif;
+}
+.attendance-info-wrapper {
+  font-family: Arial, sans-serif;
+  color: #5e5c5c;
+  padding: 1rem;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ========== METRICS ========== */
+.metrics-section {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  color: rgb(63, 62, 62);
+  gap: 1rem;
+  /* font-size: 4px; */
+  font-weight: 300;
+  justify-content: space-evenly;
+}
+
+h5{
+  color:gray;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+}
+.metric-card {
+  background: #f8f8f8;
+  padding: 1rem;
+  border-radius: 8px;
+  flex: 1 1 160px;
+  max-width: 220px;
+  box-shadow: 0 0 5px #ddd;
+  text-align: center;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 1.rem;
+  font-weight: 700;
+  margin: 0.2rem 0;
+}
+
+.metric-change {
+  color: rgb(148, 219, 148);
+  font-size: 0.75rem;
+}
+
+.insights-link a {
+  cursor: pointer; 
+  font-weight: 700;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/* ========== MAIN LAYOUT ========== */
+.main-flex-layout {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  height: calc(100vh - 180px);
+  overflow: hidden;
+}
+
+/* Panels */
+.left-panel,
+.right-panel {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* ========== CALENDAR ========== */
+.calendar-panel {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  flex-wrap: wrap;
+}
+
+.calendar-controls button {
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: white;
+  font-size: 0.9rem;
+}
+
+/* Calendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.cell.header {
+  font-weight: 700;
+  color: #555;
+  border-bottom: 1px solid #ccc;
+}
+
+.cell.day {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.cell.day:hover {
+  border-color: #007bff;
+  background-color: #e6f0ff;
+}
+
+.day-number {
+  font-weight: 600;
+}
+
+.day-label {
+  font-size: 0.65rem;
+  color: #666;
+}
+
+/* ========== LEGENDS ========== */
+.legends-container {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #ccc;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  background: #ddd;
+  color: #444;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Status Colors */
+.status-present { background-color: #98ec9b; color: white; }
+.status-absent { background-color: #ef6e65; color: white; }
+.status-off { background-color: #d1cbcb; color: white; }
+.status-rest { background-color: #68b7f8; color: white; }
+.status-leave { background-color: #ead083; color: black; }
+.status-on-duty { background-color: #5ed1e0; color: white; }
+.status-holiday { background-color: #ef5387; color: white; }
+
+/* ========== RIGHT PANEL CARDS ========== */
+.card {
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Tables */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th,
+.details-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.details-table th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* No data row */
+.no-data {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+/* ========== RESPONSIVENESS ========== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .main-flex-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .metrics-section {
+    justify-content: center;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 600px) {
+  .attendance-info-wrapper {
+    padding: 0.5rem;
+  }
+
+  .metric-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .calendar-controls {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0.75rem;
+  }
+
+  .legend-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 4px;
+  }
+
+  .details-table th, .details-table td {
+    padding: 6px;
+    font-size: 0.75rem;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+  }
+}

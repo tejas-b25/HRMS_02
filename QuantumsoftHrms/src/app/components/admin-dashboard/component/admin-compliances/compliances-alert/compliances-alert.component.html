@@ -1,0 +1,210 @@
+<div class="page">
+
+  <h2>Compliance Alerts</h2>
+
+  <button class="btn primary" (click)="openCreate()">Create Alert</button>
+
+  <section class="card" *ngIf="showForm">
+    <h3>{{ isEditMode ? 'Update Alert' : 'Create Alert' }}</h3>
+
+    <form #f="ngForm" novalidate>
+
+      <div class="grid">
+
+        <div>
+          <input
+            type="text"
+            name="complianceId"
+            placeholder="Compliance ID (numbers only)"
+            [(ngModel)]="alertForm.complianceId"
+            #complianceId="ngModel"
+            required
+            pattern="^[0-9]+$"
+            [class.invalid]="complianceId.invalid && complianceId.touched">
+          <small class="error" *ngIf="complianceId.invalid && complianceId.touched">
+            Compliance ID is required and must be numeric
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="mappingId"
+            placeholder="Mapping ID (numbers only)"
+            [(ngModel)]="alertForm.complianceMappingId"
+            #mappingId="ngModel"
+            required
+            pattern="^[0-9]+$"
+            [class.invalid]="mappingId.invalid && mappingId.touched">
+          <small class="error" *ngIf="mappingId.invalid && mappingId.touched">
+            Mapping ID must be numeric
+          </small>
+        </div>
+
+        <div>
+          <select
+            name="alertType"
+            [(ngModel)]="alertForm.alertType"
+            #alertType="ngModel"
+            required
+            [class.invalid]="alertType.invalid && alertType.touched">
+            <option value="">Select Alert Type</option>
+            <option value="RENEWAL">RENEWAL</option>
+            <option value="EXPIRY">EXPIRY</option>
+          </select>
+          <small class="error" *ngIf="alertType.invalid && alertType.touched">
+            Alert type is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="date"
+            name="alertDate"
+            [(ngModel)]="alertForm.alertDate"
+            #alertDate="ngModel"
+            required
+            [class.invalid]="alertDate.invalid && alertDate.touched">
+          <small class="error" *ngIf="alertDate.invalid && alertDate.touched">
+            Alert date is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="datetime-local"
+            name="triggerDateTime"
+            [(ngModel)]="alertForm.triggerDateTime"
+            #triggerDateTime="ngModel"
+            required
+            [class.invalid]="triggerDateTime.invalid && triggerDateTime.touched">
+          <small class="error" *ngIf="triggerDateTime.invalid && triggerDateTime.touched">
+            Trigger date & time is required
+          </small>
+        </div>
+
+        <div>
+          <select
+            name="channel"
+            [(ngModel)]="alertForm.channel"
+            #channel="ngModel"
+            required
+            [class.invalid]="channel.invalid && channel.touched">
+            <option value="">Select Channel</option>
+            <option value="EMAIL">EMAIL</option>
+            <option value="SMS">SMS</option>
+          </select>
+          <small class="error" *ngIf="channel.invalid && channel.touched">
+            Channel is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="recipients"
+            placeholder="Recipients (emails or numbers)"
+            [(ngModel)]="alertForm.recipients"
+            #recipients="ngModel"
+            required
+            [class.invalid]="recipients.invalid && recipients.touched">
+          <small class="error" *ngIf="recipients.invalid && recipients.touched">
+            Recipients are required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="templateId"
+            placeholder="Message Template ID"
+            [(ngModel)]="alertForm.messageTemplateId"
+            required>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            name="createdBy"
+            placeholder="Created By (alphabets only)"
+            [(ngModel)]="alertForm.createdBy"
+            #createdBy="ngModel"
+            required
+            pattern="^[a-zA-Z ]+$"
+            [class.invalid]="createdBy.invalid && createdBy.touched">
+          <small class="error" *ngIf="createdBy.invalid && createdBy.touched">
+            Created by must contain alphabets only
+          </small>
+        </div>
+
+      </div>
+
+      <textarea
+        rows="3"
+        placeholder="Message Payload"
+        name="messagePayload"
+        [(ngModel)]="alertForm.messagePayload"
+        required>
+      </textarea>
+
+      <input
+        type="text"
+        placeholder="Remarks (optional)"
+        [(ngModel)]="alertForm.remarks">
+
+      <div class="actions">
+        <button class="btn primary" [disabled]="f.invalid" (click)="saveAlert()">Save</button>
+        <button class="btn danger" (click)="cancelForm()">Cancel</button>
+      </div>
+
+    </form>
+  </section>
+
+  <section class="card">
+    <h3>Upcoming Alerts</h3>
+    <div class="alert-grid">
+      <div class="alert-box" *ngFor="let a of upcomingAlerts">
+        <span class="badge pending">{{ a.status }}</span>
+        <p>ID: {{ a.alertId }}</p>
+        <p>Compliance: {{ a.complianceId }}</p>
+        <p>{{ a.alertDate }}</p>
+        <p>{{ a.channel }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h3>All Alerts</h3>
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Compliance</th>
+            <th>Date</th>
+            <th>Channel</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let a of alerts">
+            <td>{{ a.alertId }}</td>
+            <td>{{ a.complianceId }}</td>
+            <td>{{ a.alertDate }}</td>
+            <td>{{ a.channel }}</td>
+            <td><span class="badge">{{ a.status }}</span></td>
+            <td>
+              <button class="btn primary" (click)="openEdit(a)">Edit</button>
+              <button class="btn danger" (click)="deleteAlert(a.alertId)">Cancel</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+</div>

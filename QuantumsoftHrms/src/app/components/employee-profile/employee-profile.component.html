@@ -1,0 +1,340 @@
+<div class="employee-profile-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Employee Information</h1>
+    <div class="employee-basic-info">
+      <div class="profile-image">
+        <img [src]="employee.photoUrl || 'assets/default-avatar.png'" 
+             [alt]="'Photo of ' + employee.name"
+             class="profile-photo">
+      </div>
+      <div class="basic-details">
+        <h2>{{ employee.name }}</h2>
+        <p><strong>Designation:</strong> {{ employee.designation }}</p>
+        <p><strong>Department:</strong> {{ employee.department }}</p>
+        <p><strong>Employee ID:</strong> {{ employee.id }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Navigation Tabs -->
+  <div class="navigation-tabs">
+    <div class="tab active" (click)="scrollToSection('profile')">Profile</div>
+    <div class="tab" (click)="scrollToSection('personal')">Personal</div>
+    <div class="tab" (click)="scrollToSection('bank')">Bank</div>
+    <div class="tab" (click)="scrollToSection('corporate')">Corporate</div>
+    <div class="tab" (click)="scrollToSection('secondary')">Secondary</div>
+    <div class="tab" (click)="scrollToSection('address')">Address</div>
+  </div>
+  <!-- Main Content -->
+  <div class="content-wrapper">
+    <!-- Profile Information Section -->
+    <section class="section-card" id="profile">
+      <div class="section-header">
+        <h2>Profile Information</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('profile')"
+                [disabled]="isAnySectionEditing() && !editableSections.profile">
+          {{ editableSections.profile ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>  
+      <div class="info-grid" [class.editing]="editableSections.profile">
+        <div class="info-item">
+          <label>Location</label>
+          <div *ngIf="!editableSections.profile" class="value">{{ employee.location || '—' }}</div>
+          <input *ngIf="editableSections.profile" 
+                 [(ngModel)]="editedEmployee.location" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Primary Contact</label>
+          <div *ngIf="!editableSections.profile" class="value">{{ employee.phone || '—' }}</div>
+          <input *ngIf="editableSections.profile" 
+                 [(ngModel)]="editedEmployee.phone" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Company Email</label>
+          <div *ngIf="!editableSections.profile" class="value">{{ employee.email || '—' }}</div>
+          <input *ngIf="editableSections.profile" 
+                 type="email"
+                 [(ngModel)]="editedEmployee.email" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Extension</label>
+          <div *ngIf="!editableSections.profile" class="value">{{ employee.extension || '—' }}</div>
+          <input *ngIf="editableSections.profile" 
+                 [(ngModel)]="editedEmployee.extension" 
+                 class="edit-input">
+        </div>
+      </div>
+      <div *ngIf="editableSections.profile" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('profile')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('profile')">Cancel</button>
+      </div>
+    </section>
+
+    <!-- Personal Information Section -->
+    <section class="section-card" id="personal">
+      <div class="section-header">
+        <h2>Personal Information</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('personal')"
+                [disabled]="isAnySectionEditing() && !editableSections.personal">
+          {{ editableSections.personal ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+      
+      <div class="info-grid" [class.editing]="editableSections.personal">
+        <div class="info-item">
+          <label>Blood Group</label>
+          <div *ngIf="!editableSections.personal" class="value">{{ employee.bloodGroup || '—' }}</div>
+          <input *ngIf="editableSections.personal" 
+                 [(ngModel)]="editedEmployee.bloodGroup" 
+                 class="edit-input">
+        </div>
+        
+        <div class="info-item">
+          <label>Marital Status</label>
+          <div *ngIf="!editableSections.personal" class="value">{{ employee.maritalStatus || '—' }}</div>
+          <select *ngIf="editableSections.personal" 
+                  [(ngModel)]="editedEmployee.maritalStatus"
+                  class="edit-input">
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+          </select>
+        </div>
+        
+        <div class="info-item">
+          <label>Date of Birth</label>
+          <div *ngIf="!editableSections.personal" class="value">{{ employee.dateOfBirth || '—' }}</div>
+          <input *ngIf="editableSections.personal" 
+                 type="date"
+                 [(ngModel)]="editedEmployee.dateOfBirth" 
+                 class="edit-input">
+        </div>
+        
+        <div class="info-item">
+          <label>Religion</label>
+          <div *ngIf="!editableSections.personal" class="value">{{ employee.religion || '—' }}</div>
+          <input *ngIf="editableSections.personal" 
+                 [(ngModel)]="editedEmployee.religion" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Height</label>
+          <div *ngIf="!editableSections.personal" class="value">{{ employee.height || '—' }}</div>
+          <input *ngIf="editableSections.personal" 
+                 [(ngModel)]="editedEmployee.height" 
+                 class="edit-input">
+        </div>
+      </div>
+      <div *ngIf="editableSections.personal" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('personal')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('personal')">Cancel</button>
+      </div>
+    </section>
+    <!-- Bank & Personal Details Section -->
+    <section class="section-card" id="bank">
+      <div class="section-header">
+        <h2>Bank & Personal Details</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('bank')"
+                [disabled]="isAnySectionEditing() && !editableSections.bank">
+          {{ editableSections.bank ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+      
+      <div class="info-grid" [class.editing]="editableSections.bank">
+        <div class="info-item">
+          <label>Bank Account</label>
+          <div *ngIf="!editableSections.bank" class="value">{{ employee.bankAccount || '—' }}</div>
+          <input *ngIf="editableSections.bank" 
+                 [(ngModel)]="editedEmployee.bankAccount" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Marriage Date</label>
+          <div *ngIf="!editableSections.bank" class="value">{{ employee.marriageDate || '—' }}</div>
+          <input *ngIf="editableSections.bank" 
+                 type="date"
+                 [(ngModel)]="editedEmployee.marriageDate" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Residential Status</label>
+          <div *ngIf="!editableSections.bank" class="value">{{ employee.residentialStatus || '—' }}</div>
+          <input *ngIf="editableSections.bank" 
+                 [(ngModel)]="editedEmployee.residentialStatus" 
+                 class="edit-input">
+        </div> 
+        <div class="info-item">
+          <label>Physically Challenged</label>
+          <div *ngIf="!editableSections.bank" class="value">{{ employee.physicallyChallenged || '—' }}</div>
+          <select *ngIf="editableSections.bank" 
+                  [(ngModel)]="editedEmployee.physicallyChallenged"
+                  class="edit-input">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="info-item">
+          <label>Weight</label>
+          <div *ngIf="!editableSections.bank" class="value">{{ employee.weight || '—' }}</div>
+          <input *ngIf="editableSections.bank" 
+                 [(ngModel)]="editedEmployee.weight" 
+                 class="edit-input">
+        </div>
+      </div>
+      <div *ngIf="editableSections.bank" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('bank')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('bank')">Cancel</button>
+      </div>
+    </section>
+    <!-- Corporate Information Section -->
+    <section class="section-card" id="corporate">
+      <div class="section-header">
+        <h2>Corporate Information</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('corporate')"
+                [disabled]="isAnySectionEditing() && !editableSections.corporate">
+          {{ editableSections.corporate ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+      <div class="info-grid" [class.editing]="editableSections.corporate">
+        <div class="info-item">
+          <label>Corporate Email</label>
+          <div *ngIf="!editableSections.corporate" class="value">{{ employee.corporateEmail || '—' }}</div>
+          <input *ngIf="editableSections.corporate" 
+                 type="email"
+                 [(ngModel)]="editedEmployee.corporateEmail" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Extension</label>
+          <div *ngIf="!editableSections.corporate" class="value">{{ employee.extension || '—' }}</div>
+          <input *ngIf="editableSections.corporate" 
+                 [(ngModel)]="editedEmployee.extension" 
+                 class="edit-input">
+        </div>
+      </div>
+      <div *ngIf="editableSections.corporate" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('corporate')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('corporate')">Cancel</button>
+      </div>
+    </section>
+    <!-- Secondary Information Section -->
+    <section class="section-card" id="secondary">
+      <div class="section-header">
+        <h2>Secondary Information</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('secondary')"
+                [disabled]="isAnySectionEditing() && !editableSections.secondary">
+          {{ editableSections.secondary ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+      <div class="info-grid" [class.editing]="editableSections.secondary">
+        <div class="info-item">
+          <label>Nationality</label>
+          <div *ngIf="!editableSections.secondary" class="value">{{ employee.nationality || '—' }}</div>
+          <input *ngIf="editableSections.secondary" 
+                 [(ngModel)]="editedEmployee.nationality" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Spouse</label>
+          <div *ngIf="!editableSections.secondary" class="value">{{ employee.spouse || '—' }}</div>
+          <input *ngIf="editableSections.secondary" 
+                 [(ngModel)]="editedEmployee.spouse" 
+                 class="edit-input">
+        </div>  
+        <div class="info-item">
+          <label>Alternate Phone</label>
+          <div *ngIf="!editableSections.secondary" class="value">{{ employee.alternatePhone || '—' }}</div>
+          <input *ngIf="editableSections.secondary" 
+                 [(ngModel)]="editedEmployee.alternatePhone" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>International Employee No</label>
+          <div *ngIf="!editableSections.secondary" class="value">{{ employee.internationalEmployeeNo || '—' }}</div>
+          <input *ngIf="editableSections.secondary" 
+                 [(ngModel)]="editedEmployee.internationalEmployeeNo" 
+                 class="edit-input">
+        </div>
+        <div class="info-item">
+          <label>Identification Mark</label>
+          <div *ngIf="!editableSections.secondary" class="value">{{ employee.identificationMark || '—' }}</div>
+          <input *ngIf="editableSections.secondary" 
+                 [(ngModel)]="editedEmployee.identificationMark" 
+                 class="edit-input">
+        </div>
+      </div>
+      
+      <div *ngIf="editableSections.secondary" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('secondary')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('secondary')">Cancel</button>
+      </div>
+    </section>
+
+    <!-- Address Information Section -->
+    <section class="section-card" id="address">
+      <div class="section-header">
+        <h2>Address Information</h2>
+        <button class="edit-btn" 
+                (click)="toggleEdit('address')"
+                [disabled]="isAnySectionEditing() && !editableSections.address">
+          {{ editableSections.address ? 'Cancel' : 'Edit' }}
+        </button>
+      </div>
+      
+      <div class="info-grid" [class.editing]="editableSections.address">
+        <div class="info-item full-width">
+          <label>Contact Address</label>
+          <div *ngIf="!editableSections.address" class="value">{{ employee.contactAddress || '—' }}</div>
+          <input *ngIf="editableSections.address" 
+                 [(ngModel)]="editedEmployee.contactAddress" 
+                 class="edit-input">
+        </div>
+        
+        <div class="info-item full-width">
+          <label>Full Address</label>
+          <div *ngIf="!editableSections.address" class="value">{{ employee.address || '—' }}</div>
+          <textarea *ngIf="editableSections.address" 
+                    [(ngModel)]="editedEmployee.address" 
+                    class="edit-input textarea"
+                    rows="3"></textarea>
+        </div>
+        <div class="info-item">
+          <label>Emergency Contact Name</label>
+          <div *ngIf="!editableSections.address" class="value">{{ employee.emergencyContactName || '—' }}</div>
+          <input *ngIf="editableSections.address" 
+                 [(ngModel)]="editedEmployee.emergencyContactName" 
+                 class="edit-input">
+        </div>
+        
+        <div class="info-item">
+          <label>Emergency Phone</label>
+          <div *ngIf="!editableSections.address" class="value">{{ employee.emergencyPhone1 || '—' }}</div>
+          <input *ngIf="editableSections.address" 
+                 [(ngModel)]="editedEmployee.emergencyPhone1" 
+                 class="edit-input">
+        </div>
+        
+        <div class="info-item">
+          <label>Emergency Extension</label>
+          <div *ngIf="!editableSections.address" class="value">{{ employee.emergencyExtension || '—' }}</div>
+          <input *ngIf="editableSections.address" 
+                 [(ngModel)]="editedEmployee.emergencyExtension" 
+                 class="edit-input">
+        </div>
+      </div>
+      
+      <div *ngIf="editableSections.address" class="action-buttons">
+        <button class="save-btn" (click)="saveSection('address')">Save</button>
+        <button class="cancel-btn" (click)="cancelEdit('address')">Cancel</button>
+      </div>
+    </section>
+  </div>
+</div>

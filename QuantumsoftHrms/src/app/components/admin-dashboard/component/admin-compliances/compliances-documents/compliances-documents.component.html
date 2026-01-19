@@ -1,0 +1,130 @@
+<div class="container">
+
+  <h2>📂 Compliance Documents</h2>
+
+  <div class="card upload-card">
+
+    <h3>Upload Document</h3>
+
+    <div class="form-grid">
+
+      <div>
+        <input
+          type="text"
+          placeholder="Compliance ID (numbers only)"
+          [(ngModel)]="form.complianceId"
+          pattern="^[0-9]+$"
+          required
+          #complianceId="ngModel"
+          [class.invalid]="complianceId.invalid && complianceId.touched">
+
+        <small class="error" *ngIf="complianceId.invalid && complianceId.touched">
+          Compliance ID is required and must be numeric
+        </small>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Compliance Mapping ID"
+          [(ngModel)]="form.complianceMappingId"
+          pattern="^[0-9]+$"
+          required
+          #mappingId="ngModel"
+          [class.invalid]="mappingId.invalid && mappingId.touched">
+
+        <small class="error" *ngIf="mappingId.invalid && mappingId.touched">
+          Mapping ID is required and must be numeric
+        </small>
+      </div>
+
+      <div>
+        <input
+          type="text"
+          placeholder="Employee ID"
+          [(ngModel)]="form.employeeId"
+          pattern="^[0-9]+$"
+          required
+          #employeeId="ngModel"
+          [class.invalid]="employeeId.invalid && employeeId.touched">
+
+        <small class="error" *ngIf="employeeId.invalid && employeeId.touched">
+          Employee ID is required and must be numeric
+        </small>
+      </div>
+
+      <div>
+        <input
+          type="date"
+          [(ngModel)]="form.expiryDate"
+          required
+          #expiryDate="ngModel"
+          [class.invalid]="expiryDate.invalid && expiryDate.touched">
+
+        <small class="error" *ngIf="expiryDate.invalid && expiryDate.touched">
+          Expiry date is required
+        </small>
+      </div>
+
+      <div>
+        <input
+          type="file"
+          (change)="onFileChange($event)"
+          [class.invalid]="!selectedFile && message === ''">
+
+        <small class="error" *ngIf="!selectedFile && message === ''">
+          File selection is required
+        </small>
+      </div>
+
+    </div>
+
+    <button class="btn primary" (click)="upload()">Upload</button>
+
+    <p class="success" *ngIf="message">{{ message }}</p>
+
+  </div>
+
+  <div class="actions">
+    <button class="btn warn" (click)="loadExpired()">Load Expired Documents</button>
+  </div>
+
+  <div class="table-wrapper" *ngIf="documents.length">
+    <table>
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Employee</th>
+          <th>Expiry</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let d of documents">
+          <td>{{ d.fileName }}</td>
+          <td>{{ d.employeeId }}</td>
+          <td>{{ d.expiryDate }}</td>
+          <td>
+            <span
+              [class.active]="d.status === 'Active'"
+              [class.pending]="d.status === 'PendingVerification'">
+              {{ d.status }}
+            </span>
+          </td>
+          <td class="actions-col">
+            <button class="btn small" (click)="download(d)">⬇</button>
+            <button class="btn small success" *ngIf="!d.isVerified" (click)="verify(d)">✔</button>
+            <button class="btn small danger" (click)="delete(d)">🗑</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="empty" *ngIf="!documents.length && !isLoading">
+    No documents found
+  </div>
+
+</div>

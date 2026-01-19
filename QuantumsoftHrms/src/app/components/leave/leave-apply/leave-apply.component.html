@@ -1,0 +1,48 @@
+<div class="leave-container">
+  <h2>Apply Leave</h2>
+
+  <form [formGroup]="leaveForm" (ngSubmit)="submit()">
+
+    <div class="form-group">
+      <label>Employee ID</label>
+      <input type="number" formControlName="employeeId" />
+    </div>
+
+    <div class="form-group">
+      <label>Leave Type</label>
+      <select formControlName="leaveTypeId">
+        <option value="3">Paid Leave</option>
+        <option value="1">Casual Leave</option>
+        <option value="2">Sick Leave</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Start Date</label>
+      <input type="date" formControlName="startDate" />
+    </div>
+
+    <div class="form-group">
+      <label>End Date</label>
+      <input type="date" formControlName="endDate" />
+    </div>
+
+    <div class="form-group">
+      <label>Reason</label>
+      <textarea formControlName="reason"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Attachment (optional)</label>
+      <input type="file" (change)="onFileChange($event)" />
+    </div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Submitting...' : 'Apply Leave' }}
+    </button>
+
+    <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+  </form>
+</div>

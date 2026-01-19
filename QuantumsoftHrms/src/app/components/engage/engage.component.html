@@ -1,0 +1,79 @@
+<div class="activity-page">
+    
+  <aside class="sidebar">
+    <h3>Filters</h3>
+    <div class="filter-section">
+      <label>Activities</label>
+      <div class="radio-group">
+        <label><input type="radio" name="filter" [(ngModel)]="selectedFilter" value="All Activities" (change)="applyFilter()"> All Activities</label>
+        <label><input type="radio" name="filter" [(ngModel)]="selectedFilter" value="Kudos" (change)="applyFilter()"> Kudos</label>
+        <label><input type="radio" name="filter" [(ngModel)]="selectedFilter" value="Polls" (change)="applyFilter()"> Polls</label>
+        <label><input type="radio" name="filter" [(ngModel)]="selectedFilter" value="Posts" (change)="applyFilter()"> Posts</label>
+      </div>
+    </div>
+
+    <input type="text" placeholder="Search" [(ngModel)]="searchText" (input)="applyFilter()">
+  </aside>
+
+  <main class="feed-section">
+    <div class="top-bar">
+      <div class="greeting">
+        <h4>Hey Priya</h4>
+        <p>Ready to dive in?</p>
+      </div>
+      <div class="action-buttons">
+        <button class="kudos" (click)="showForm('kudos')">🎉 Give Kudos</button>
+        <button class="polls" (click)="showForm('poll')">📊 Create Poll</button>
+        <button class="posts" (click)="showForm('post')">📝 Create Post</button>
+      </div>
+    </div>
+
+    <div class="form-container" *ngIf="activeForm === 'kudos'">
+      <h3>🎉 Give Kudos</h3>
+      <input type="text" [(ngModel)]="kudosUser" placeholder="Enter colleague's name">
+      <textarea [(ngModel)]="kudosMessage" placeholder="Write your kudos message"></textarea>
+      <button (click)="submitKudos()">Give Kudos</button>
+    </div>
+
+    <div class="form-container" *ngIf="activeForm === 'poll'">
+      <h3>📊 Create Poll</h3>
+      <input type="text" [(ngModel)]="pollQuestion" placeholder="Enter poll question">
+      <input type="text" [(ngModel)]="pollOption1" placeholder="Option 1">
+      <input type="text" [(ngModel)]="pollOption2" placeholder="Option 2">
+      <button (click)="submitPoll()">Create Poll</button>
+    </div>
+
+    <div class="form-container" *ngIf="activeForm === 'post'">
+      <h3>📝 Create Post</h3>
+      <textarea [(ngModel)]="postMessage" placeholder="What's on your mind?"></textarea>
+      <button (click)="submitPost()">Post</button>
+    </div>
+
+    <div class="feed-header">
+      <h3>All Activities - All Groups</h3>
+      <div class="sort">
+        Sort:
+        <select [(ngModel)]="sortOrder" (change)="applyFilter()">
+          <option>Newest</option>
+          <option>Oldest</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="feed-list">
+      <div class="feed-card" *ngFor="let activity of filteredActivities">
+        <div class="feed-header">
+          <img src="/assets/logo.png" alt="Logo" class="logo" />
+          <span>Group: {{ activity.group }}</span>
+          <span class="time">{{ activity.timeAgo }}</span>
+        </div>
+        <p>{{ activity.message }}</p>
+        <div class="user">👤 {{ activity.user }}</div>
+        <div class="actions">
+          <button>Reaction</button>
+          <button>Comment</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

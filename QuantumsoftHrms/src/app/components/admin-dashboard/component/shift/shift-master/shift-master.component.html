@@ -1,0 +1,105 @@
+<div class="container shift-container">
+
+  <h2>🕘 Shift Master</h2>
+
+  <form #f="ngForm" (ngSubmit)="submit()" class="card">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Shift Name</label>
+        <input
+          type="text"
+          name="shiftName"
+          placeholder="Morning / Night Shift"
+          [(ngModel)]="shiftForm.shiftName"
+          required
+          pattern="^[a-zA-Z ]+$"
+          #shiftName="ngModel">
+
+        <div class="error" *ngIf="shiftName.touched && shiftName.hasError('required')">
+  Shift name is required
+</div>
+
+<div class="error" *ngIf="shiftName.touched && shiftName.hasError('pattern')">
+  Only letters allowed
+</div>
+
+      </div>
+
+      <div class="field">
+        <label>Start Time</label>
+        <input
+          type="time"
+          name="startTime"
+          [(ngModel)]="shiftForm.startTime"
+          required
+          #startTime="ngModel">
+
+        <div class="error" *ngIf="startTime.touched && startTime.invalid">
+          Start time is required
+        </div>
+      </div>
+
+      <div class="field">
+        <label>End Time</label>
+        <input
+          type="time"
+          name="endTime"
+          [(ngModel)]="shiftForm.endTime"
+          required
+          #endTime="ngModel">
+
+        <div class="error" *ngIf="endTime.touched && endTime.invalid">
+          End time is required
+        </div>
+
+        <div class="error"
+             *ngIf="shiftForm.startTime && shiftForm.endTime
+             && shiftForm.endTime <= shiftForm.startTime">
+          End time must be greater than start time
+        </div>
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button
+        type="submit"
+        [disabled]="f.invalid || shiftForm.endTime <= shiftForm.startTime">
+        {{ isEdit ? 'Update Shift' : 'Create Shift' }}
+      </button>
+
+      <button type="button" class="secondary" (click)="reset()">
+        Clear
+      </button>
+    </div>
+
+  </form>
+
+  <table *ngIf="shifts.length">
+
+    <thead>
+      <tr>
+        <th>Shift ID</th>
+        <th>Shift Name</th>
+        <th>Shift Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let s of shifts">
+        <td>{{ s.shiftId }}</td>
+        <td>{{ s.shiftName }}</td>
+        <td>{{ s.startTime }} – {{ s.endTime }}</td>
+        <td>
+          <button class="edit" (click)="editShift(s)">Edit</button>
+          <button class="delete" (click)="deleteShift(s.shiftId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

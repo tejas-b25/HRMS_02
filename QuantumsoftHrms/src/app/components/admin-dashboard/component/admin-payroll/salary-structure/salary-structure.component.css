@@ -1,0 +1,53 @@
+.salary-structure-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.form-control {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+button {
+  min-width: 160px;
+}
+
+@media (max-width: 576px) {
+  .salary-structure-container {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .salary-structure-container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .salary-structure-container {
+    max-width: 900px;
+  }
+}
+  h2 {
+    font-size: 22px;
+  }

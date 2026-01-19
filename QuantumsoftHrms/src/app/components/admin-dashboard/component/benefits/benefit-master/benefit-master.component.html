@@ -1,0 +1,109 @@
+<div class="benefits-container">
+
+  <h2>Benefits</h2>
+
+  <form [formGroup]="benefitForm" (ngSubmit)="submitForm()" novalidate>
+
+    <div class="form-group">
+      <label>Benefit Name *</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="benefitName"
+        placeholder="Enter benefit name (alphabets only)">
+      <small *ngIf="benefitForm.get('benefitName')?.touched && benefitForm.get('benefitName')?.invalid">
+        Name is required (letters only)
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Benefit Type *</label>
+      <select class="form-control" formControlName="benefitType">
+        <option value="">Select benefit type</option>
+        <option value="ALLOWANCE">Allowance</option>
+        <option value="INSURANCE">Insurance</option>
+        <option value="BONUS">Bonus</option>
+        <option value="OTHER">Other</option>
+      </select>
+      <small *ngIf="benefitForm.get('benefitType')?.touched && benefitForm.get('benefitType')?.invalid">
+        Benefit type is required
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea
+        rows="3"
+        class="form-control"
+        formControlName="description"
+        placeholder="Enter benefit description (min 10 characters)">
+      </textarea>
+      <small *ngIf="benefitForm.get('description')?.touched && benefitForm.get('description')?.invalid">
+        Description must be at least 10 characters
+      </small>
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" formControlName="isActive">
+      <label>Active</label>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label>Created By</label>
+        <input class="form-control" formControlName="createdBy" placeholder="Created by">
+      </div>
+
+      <div class="form-group">
+        <label>Updated By</label>
+        <input class="form-control" formControlName="updatedBy" placeholder="Updated by">
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button type="submit" [disabled]="benefitForm.invalid">
+        {{ isEditMode ? 'Update Benefit' : 'Create Benefit' }}
+      </button>
+      <button type="button" class="secondary" (click)="resetForm()">Reset</button>
+    </div>
+
+  </form>
+
+  <div *ngIf="loading">Loading benefits...</div>
+
+  <table *ngIf="!loading && benefits.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Active</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let b of benefits">
+        <td>{{ b.benefitId }}</td>
+        <td>{{ b.benefitName }}</td>
+        <td>{{ b.benefitType }}</td>
+        <td>{{ b.description }}</td>
+        <td>{{ b.isActive ? 'Yes' : 'No' }}</td>
+        <td>{{ b.createdAt | date:'short' }}</td>
+        <td>{{ b.updatedAt | date:'short' }}</td>
+        <td>
+          <button class="edit" (click)="editBenefit(b)">Edit</button>
+          <button class="delete" (click)="deleteBenefit(b.benefitId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !benefits.length">
+    No benefits found
+  </div>
+
+</div>

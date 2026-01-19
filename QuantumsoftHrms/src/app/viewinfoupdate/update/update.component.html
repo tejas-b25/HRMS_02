@@ -1,0 +1,15 @@
+<div class="container">
+  <h2>Update Profile Details</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label>Qualification:</label>
+    <input type="text" [(ngModel)]="employee.qualification" name="qualification" required />
+
+    <label>Department:</label>
+    <input type="text" [(ngModel)]="employee.department" name="department" required />
+
+    <label>Photo URL:</label>
+    <input type="text" [(ngModel)]="employee.photoUrl" name="photoUrl" />
+
+    <button type="submit">Save Changes</button>
+  </form>
+</div>

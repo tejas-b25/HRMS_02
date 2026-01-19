@@ -1,0 +1,122 @@
+<div class="upload-box">
+  <h3>Upload Document</h3>
+
+  <div class="row">
+
+    <div>
+      <input
+        type="text"
+        placeholder="Employee ID (numbers only)"
+        [(ngModel)]="employeeId"
+        #empId="ngModel"
+        required
+        pattern="^[0-9]+$"
+        [class.invalid]="empId.invalid && empId.touched" />
+
+      <small class="error" *ngIf="empId.invalid && empId.touched">
+        Employee ID must contain only numbers
+      </small>
+    </div>
+
+    <div>
+      <input
+        type="text"
+        placeholder="Document Type (alphabets only)"
+        [(ngModel)]="documentType"
+        #docType="ngModel"
+        required
+        pattern="^[a-zA-Z ]+$"
+        [class.invalid]="docType.invalid && docType.touched" />
+
+      <small class="error" *ngIf="docType.invalid && docType.touched">
+        Document type must contain alphabets only
+      </small>
+    </div>
+
+    <div>
+      <input
+        type="file"
+        (change)="onFileChange($event)"
+        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" />
+    </div>
+
+    <button (click)="uploadDocument()">Upload</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <h2>Admin – Document Management</h2>
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="Enter Employee ID"
+      [(ngModel)]="employeeId"
+      #searchEmp="ngModel"
+      required
+      pattern="^[0-9]+$"
+      [class.invalid]="searchEmp.invalid && searchEmp.touched" />
+
+    <button (click)="loadDocuments()">Load Documents</button>
+  </div>
+
+  <small class="error" *ngIf="searchEmp.invalid && searchEmp.touched">
+    Employee ID must be numeric
+  </small>
+
+  <div class="actions" *ngIf="documents.length">
+    <textarea
+      placeholder="Enter remarks (alphabets only)"
+      [(ngModel)]="remarks"
+      #remarksField="ngModel"
+      required
+      pattern="^[a-zA-Z ]+$"
+      [class.invalid]="remarksField.invalid && remarksField.touched">
+    </textarea>
+
+    <small class="error" *ngIf="remarksField.invalid && remarksField.touched">
+      Remarks must contain only alphabets
+    </small>
+
+    <button class="verify" (click)="verifyAll()">Verify All</button>
+    <button class="reject" (click)="rejectAll()">Reject All</button>
+    <button class="delete" (click)="deleteAll()">Delete All</button>
+  </div>
+
+  <table *ngIf="documents.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>File</th>
+        <th>Status</th>
+        <th>Remarks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let doc of documents">
+        <td>{{ doc.documentId }}</td>
+        <td>{{ doc.documentType }}</td>
+        <td>{{ doc.fileName }}</td>
+        <td>
+          <span [class]="doc.status.toLowerCase()">
+            {{ doc.status }}
+          </span>
+        </td>
+        <td>{{ doc.remarks || '-' }}</td>
+        <td class="btns">
+          <button (click)="preview(doc)">Preview</button>
+          <button (click)="download(doc)">Download</button>
+          <button class="danger" (click)="deleteDocument(doc.documentId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!documents.length && !isLoading">No documents</p>
+</div>

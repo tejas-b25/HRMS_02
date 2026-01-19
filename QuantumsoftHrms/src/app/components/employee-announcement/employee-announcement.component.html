@@ -1,0 +1,51 @@
+<div class="container mt-4">
+
+  <h3 class="mb-3">Company Announcements</h3>
+
+  <div *ngIf="loading" class="text-center">
+    Loading announcements...
+  </div>
+
+  <div
+    class="card mb-3"
+    *ngFor="let a of announcements">
+
+    <div class="card-body">
+      <h5 class="card-title">{{ a.title }}</h5>
+
+      <p class="card-text">{{ a.description }}</p>
+
+      <p>
+        <b>Category:</b> {{ a.category }} |
+        <b>Priority:</b> {{ a.priority }}
+      </p>
+
+      <a
+        *ngIf="a.attachmentUrl"
+        [href]="a.attachmentUrl"
+        target="_blank">
+        View Attachment
+      </a>
+
+      <br><br>
+
+      <button
+        class="btn btn-primary btn-sm me-2"
+        (click)="markRead(a)">
+        Mark as Read
+      </button>
+
+      <button
+        class="btn btn-success btn-sm"
+        (click)="acknowledge(a)">
+        Acknowledge
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && announcements.length === 0"
+       class="alert alert-info">
+    No announcements available.
+  </div>
+
+</div>

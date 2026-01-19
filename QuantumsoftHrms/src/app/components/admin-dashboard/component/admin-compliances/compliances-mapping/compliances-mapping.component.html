@@ -1,0 +1,123 @@
+<div class="container">
+
+  <div class="card">
+    <h2>📄 Assign Compliance</h2>
+
+    <form [formGroup]="complianceForm" (ngSubmit)="submit()">
+
+      <div class="grid">
+
+        <div>
+          <input
+            type="text"
+            placeholder="Employee ID (numbers only)"
+            formControlName="employeeId"
+            [class.invalid]="complianceForm.get('employeeId')?.invalid && complianceForm.get('employeeId')?.touched">
+
+          <small class="error"
+            *ngIf="complianceForm.get('employeeId')?.invalid && complianceForm.get('employeeId')?.touched">
+            Employee ID is required and must be numeric
+          </small>
+        </div>
+
+        <div>
+          <select
+            formControlName="complianceId"
+            [class.invalid]="complianceForm.get('complianceId')?.invalid && complianceForm.get('complianceId')?.touched">
+
+            <option value="">Select Compliance</option>
+            <option *ngFor="let c of compliances" [value]="c.complianceId">
+              {{ c.complianceName }} ({{ c.complianceType }})
+            </option>
+          </select>
+
+          <small class="error"
+            *ngIf="complianceForm.get('complianceId')?.invalid && complianceForm.get('complianceId')?.touched">
+            Compliance selection is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="text"
+            placeholder="Compliance Number"
+            formControlName="complianceNumber"
+            [class.invalid]="complianceForm.get('complianceNumber')?.invalid && complianceForm.get('complianceNumber')?.touched">
+
+          <small class="error"
+            *ngIf="complianceForm.get('complianceNumber')?.invalid && complianceForm.get('complianceNumber')?.touched">
+            Compliance number is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="date"
+            formControlName="startDate"
+            [class.invalid]="complianceForm.get('startDate')?.invalid && complianceForm.get('startDate')?.touched">
+
+          <small class="error"
+            *ngIf="complianceForm.get('startDate')?.invalid && complianceForm.get('startDate')?.touched">
+            Start date is required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="date"
+            formControlName="endDate"
+            [class.invalid]="complianceForm.get('endDate')?.invalid && complianceForm.get('endDate')?.touched">
+
+          <small class="error"
+            *ngIf="complianceForm.get('endDate')?.invalid && complianceForm.get('endDate')?.touched">
+            End date is required
+          </small>
+        </div>
+
+      </div>
+
+      <textarea
+        placeholder="Remarks (optional)"
+        formControlName="remarks">
+      </textarea>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Saving...' : 'Assign Compliance' }}
+      </button>
+
+      <p class="msg" *ngIf="message">{{ message }}</p>
+
+    </form>
+  </div>
+
+  <div class="card" *ngIf="employeeCompliances.length">
+    <h2>👤 Employee Compliances</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Compliance</th>
+          <th>Number</th>
+          <th>Status</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of employeeCompliances">
+          <td>{{ e.complianceId }}</td>
+          <td>{{ e.complianceNumber }}</td>
+          <td>{{ e.complianceNumber }}</td>
+          <td>
+            <span class="status">{{ e.status }}</span>
+          </td>
+          <td>{{ e.startDate }}</td>
+          <td>{{ e.endDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

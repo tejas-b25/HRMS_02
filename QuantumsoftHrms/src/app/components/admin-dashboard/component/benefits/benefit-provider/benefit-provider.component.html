@@ -1,0 +1,69 @@
+<div class="container">
+
+  <h2>🏥 Benefit Providers</h2>
+
+  <!-- FORM -->
+  <div class="card form-card">
+    <h3>{{ isEditMode ? 'Update Provider' : 'Add Provider' }}</h3>
+
+    <form (ngSubmit)="save()">
+
+      <input type="text" placeholder="Provider Name" [(ngModel)]="provider.providerName" name="providerName" required>
+
+      <input type="text" placeholder="Contact Person" [(ngModel)]="provider.contactPerson" name="contactPerson">
+
+      <input type="email" placeholder="Email" [(ngModel)]="provider.contactEmail" name="contactEmail">
+
+      <input type="text" placeholder="Phone" [(ngModel)]="provider.contactPhone" name="contactPhone">
+
+      <input type="text" placeholder="Policy Number" [(ngModel)]="provider.policyNumber" name="policyNumber">
+
+      <input type="date" [(ngModel)]="provider.renewalDate" name="renewalDate">
+
+      <textarea placeholder="Address" [(ngModel)]="provider.address" name="address"></textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" [(ngModel)]="provider.isActive" name="isActive">
+        Active
+      </label>
+
+      <button type="submit">{{ isEditMode ? 'Update' : 'Save' }}</button>
+      <button type="button" class="secondary" (click)="reset()">Clear</button>
+    </form>
+  </div>
+
+  <!-- LIST -->
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>ProviderID</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Policy</th>
+          <th>Renewal</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of providers ; trackBy: trackByProviderId">
+          <td>{{ p.providerId ?? '—' }}</td>
+          <td>{{ p.providerName }}</td>
+          <td>{{ p.contactPerson }}</td>
+          <td>{{ p.policyNumber }}</td>
+          <td>{{ p.renewalDate | date }}</td>
+          <td>
+            <span [class.active]="p.isActive">●</span>
+          </td>
+          <td>
+            <button class="edit" (click)="edit(p)">Edit</button>
+            <button class="delete" (click)="delete(p.providerId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

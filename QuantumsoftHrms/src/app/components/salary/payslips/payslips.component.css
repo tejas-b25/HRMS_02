@@ -1,0 +1,108 @@
+.payslip-container {
+  /* background: #f9fafb;  */
+  padding: 20px;
+  min-height: 85vh;
+  font-family: "Inter", sans-serif;
+}
+
+.header-row{
+  padding: 12px;
+}
+.toggle-switch {
+  display: inline-flex;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.toggle-option {
+  border: none;
+  background: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.25s ease;
+  font-size: 15px;
+}
+
+.toggle-option.active {
+  background-color: #36a3f7;
+  color: #fff;
+}
+.toggle-option:first-child {
+  border-right: 1px solid #d0d7de;
+}
+
+.toggle-option:hover:not(.active) {
+  background-color: #f3f4f6;
+}
+
+
+.year-dropdown {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #374151;
+  cursor: pointer;
+  outline: none;
+}
+
+
+
+.content-box {
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  height: 500px;
+   background-size: 140px;
+  /* background-image: url('https://linckia.cdn.greythr.com/assets/empty-payslip-state.svg'); */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.empty-state {
+  text-align: center;
+  color: #6b7280;
+  padding: 20px;
+}
+
+.empty-state p {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 500px;
+  margin: 0 auto;
+}
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #777;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .toggle-switch {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .toggle-option {
+    flex: 1;
+    text-align: center;
+  }
+
+  .content-box {
+    height: auto;
+    min-height: 400px;
+    padding: 20px;
+  }
+}

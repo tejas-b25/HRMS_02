@@ -1,0 +1,105 @@
+/* *{overflow-y:hidden ;} */
+.kudos-container {
+  font-family:Arial, Helvetica, sans-serif;
+  text-align: center;
+  background-color: #fafafa;
+  height: 100%;
+  padding-top: 40px;
+  overflow: hidden;
+}
+.tabs {
+  display: flex;
+  gap: 30px;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+
+  color: #555;
+}
+
+.tabs button.active {
+  color: #080d12;
+  font-weight: 600;
+  border-bottom: 2px solid #0078d7;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.content {
+  margin-top: 80px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+}
+
+.icon-circle {
+  background-color: #ffa94d;
+  border-radius: 50%;
+  height: 140px;
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  position: relative;
+}
+
+.thumb {
+  font-size: 64px;
+  color: white;
+}
+
+h3 {
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+p {
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.primary-btn {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  /* text-decoration: none; */
+  
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+/* .primary-btn a {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  text-decoration: none;
+} */
+
+.primary-btn:hover {
+  background-color: #32408f;
+}
+
+.primary-btn a:hover {
+  background-color: #32408f;
+}

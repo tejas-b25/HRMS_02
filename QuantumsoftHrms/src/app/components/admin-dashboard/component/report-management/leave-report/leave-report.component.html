@@ -1,0 +1,77 @@
+<div class="report-container">
+
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <h2>Leave Report</h2>
+
+  <form #f="ngForm" (ngSubmit)="generate(f)" novalidate>
+
+    <div class="grid">
+
+      <div class="field">
+        <label>From Date</label>
+        <input
+          type="date"
+          name="fromDate"
+          [(ngModel)]="fromDate"
+          required
+          #fromCtrl="ngModel">
+
+        <small class="error" *ngIf="fromCtrl.touched && fromCtrl.invalid">
+          From date is required
+        </small>
+      </div>
+
+      <div class="field">
+        <label>To Date</label>
+        <input
+          type="date"
+          name="toDate"
+          [(ngModel)]="toDate"
+          required
+          #toCtrl="ngModel">
+
+        <small class="error" *ngIf="toCtrl.touched && toCtrl.invalid">
+          To date is required
+        </small>
+
+        <small class="error"
+               *ngIf="fromDate && toDate && toDate < fromDate">
+          To date must be same or after From date
+        </small>
+      </div>
+
+      <div class="field">
+        <label>Export Format</label>
+        <select
+          name="exportType"
+          [(ngModel)]="exportType"
+          required
+          #exportCtrl="ngModel">
+
+          <option value="" disabled>Select export format</option>
+          <option value="csv">CSV</option>
+          <option value="excel">Excel</option>
+          <option value="pdf">PDF</option>
+        </select>
+
+        <small class="error" *ngIf="exportCtrl.touched && exportCtrl.invalid">
+          Export format is required
+        </small>
+      </div>
+
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="loading || f.invalid || (fromDate && toDate && toDate < fromDate)">
+      {{ loading ? 'Generating...' : 'Download Report' }}
+    </button>
+
+    <p class="status success" *ngIf="message">
+      {{ message }}
+    </p>
+
+  </form>
+
+</div>

@@ -1,0 +1,89 @@
+<div class="attendance-clockout-container p-3">
+  <h3>Clock Out</h3>
+
+  <!-- Messages -->
+  <div *ngIf="loading" class="alert alert-info">Submitting clock-out...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <form #clockOutForm="ngForm" (ngSubmit)="onSubmit(clockOutForm)">
+
+    <!-- Employee ID -->
+    <div class="mb-3">
+      <label class="form-label">Employee ID *</label>
+      <input
+        type="number"
+        class="form-control"
+        name="employeeId"
+        required
+        [(ngModel)]="clockOutData.employeeId"
+      />
+    </div>
+
+    <!-- Geo Location -->
+    <div class="mb-3">
+      <label class="form-label">Geo Location (lat,lng)</label>
+      <input
+        type="text"
+        class="form-control"
+        name="geoLocation"
+        [(ngModel)]="clockOutData.geoLocation"
+        placeholder="19.7582,75.3203"
+      />
+    </div>
+
+    <!-- Device Type -->
+    <div class="mb-3">
+      <label class="form-label">Device Type *</label>
+      <select
+        class="form-select"
+        name="deviceType"
+        [(ngModel)]="clockOutData.deviceType"
+        required
+      >
+        <option value="MOBILE">MOBILE</option>
+        <option value="DESKTOP">DESKTOP</option>
+        <option value="TABLET">TABLET</option>
+      </select>
+    </div>
+
+    <!-- Clock-out Time -->
+    <div class="mb-3">
+      <label class="form-label">
+        Clock-out Time (ISO) *
+      </label>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          name="clockOutTime"
+          [(ngModel)]="clockOutData.clockOutTime"
+          required
+          placeholder="2025-10-10T18:30:00"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          (click)="useCurrentTime()"
+        >
+          Use current
+        </button>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="loading"
+    >
+      {{ loading ? 'Clocking out...' : 'Clock Out' }}
+    </button>
+  </form>
+
+  <!-- Optional: Debug response -->
+  <!--
+  <pre class="mt-3" *ngIf="lastResponse">
+    {{ lastResponse | json }}
+  </pre>
+  -->
+</div>

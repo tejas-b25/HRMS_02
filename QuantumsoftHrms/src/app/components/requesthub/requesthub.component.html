@@ -1,0 +1,39 @@
+<div class="requesthub-container">
+  <!-- Tabs -->
+  <div class="tab-section">
+    <div class="tabs">
+      <button
+        [class.active]="activeTab === 'apply'"
+        (click)="setActiveTab('apply')"
+      >
+        Apply
+      </button>
+      <button
+        [class.active]="activeTab === 'pending'"
+        (click)="setActiveTab('pending')"
+      >
+        Pending
+      </button>
+      <button
+        [class.active]="activeTab === 'closed'"
+        (click)="setActiveTab('closed')"
+      >
+        Closed
+      </button>
+    </div>
+  </div>
+  <!-- Content -->
+  <div class="content-section" *ngIf="activeTab">
+    <div class="empty-state">
+      <img src="https://linckia.cdn.greythr.com/assets/GTIllustrations107_var0.svg" alt="">
+      <h2>It's empty in here!</h2>
+      <p>
+        No request types have been added yet.<br />
+        Please check back later!
+      </p>
+    </div>
+  </div>
+  <footer>
+    <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+  </footer>
+</div>

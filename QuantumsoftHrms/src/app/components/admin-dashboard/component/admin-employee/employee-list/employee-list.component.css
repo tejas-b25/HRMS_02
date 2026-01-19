@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+}
+
+.employee-list-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px;
+}
+
+h2 {
+  color: #1976d2;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+/* Top search + button */
+.employee-list-container .mb-3 {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.employee-list-container input[type="text"] {
+  min-width: 260px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.employee-list-container input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+}
+
+/* Buttons */
+button {
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: #1976d2;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #1565c0;
+}
+
+.btn-outline-primary,
+.btn-outline-danger {
+  min-width: 70px;
+}
+
+/* Table wrapper for responsiveness */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+thead {
+  background: #1976d2;
+  color: #fff;
+}
+
+th, td {
+  padding: 10px 12px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #f5f9ff;
+}
+
+/* Status text */
+td:nth-child(6) {
+  font-weight: 600;
+}
+
+/* Action buttons alignment */
+td:last-child {
+  white-space: nowrap;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Loading / empty text */
+.employee-list-container > div {
+  font-size: 14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* Tablets */
+@media (max-width: 992px) {
+  th, td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .employee-list-container input[type="text"] {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .employee-list-container .mb-3 {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .employee-list-container input[type="text"] {
+    width: 100%;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+
+  /* Make table scrollable on mobile */
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

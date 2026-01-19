@@ -1,0 +1,119 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card h3,
+.card h4 {
+  color: #1976d2;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input,
+select,
+textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.invalid {
+  border: 2px solid #e53935 !important;
+  background-color: #fff5f5;
+}
+
+.error {
+  color: #e53935;
+  font-size: 12px;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  min-width: 100px;
+}
+
+.action-buttons button:first-child {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.action-buttons button:last-child {
+  background: #ef5350;
+  color: #ffffff;
+}
+
+.action-buttons button:last-child:hover {
+  background: #e53935;
+}
+
+.active {
+  background: #d4edda;
+  color: #155724;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deleted {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}

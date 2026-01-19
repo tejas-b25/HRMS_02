@@ -1,0 +1,107 @@
+<div class="salary-structure-container p-3">
+
+  <h2>Salary Structure</h2>
+
+  <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form [formGroup]="structureForm" (ngSubmit)="submitForm()">
+
+    <input type="hidden" formControlName="structureId" />
+
+    <div class="mb-3">
+      <label class="form-label">Structure Name *</label>
+      <input
+        class="form-control"
+        formControlName="structureName"
+        placeholder="Enter structure name (alphabets only)" />
+      <small class="text-danger" *ngIf="structureNameCtrl?.touched && structureNameCtrl?.invalid">
+        Structure name is required
+      </small>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Basic Pay *</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="basicPay"
+          placeholder="Enter basic pay" />
+        <small class="text-danger" *ngIf="basicPayCtrl?.touched && basicPayCtrl?.invalid">
+          Enter valid basic pay
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">HRA *</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="hra"
+          placeholder="Enter HRA amount" />
+        <small class="text-danger" *ngIf="hraCtrl?.touched && hraCtrl?.invalid">
+          Enter valid HRA
+        </small>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Variable Pay *</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="variablePay"
+          placeholder="Enter variable pay" />
+        <small class="text-danger" *ngIf="variablePayCtrl?.touched && variablePayCtrl?.invalid">
+          Enter valid variable pay
+        </small>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Other Allowances *</label>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="otherAllowances"
+          placeholder="Enter other allowances" />
+        <small class="text-danger" *ngIf="otherAllowancesCtrl?.touched && otherAllowancesCtrl?.invalid">
+          Enter valid amount
+        </small>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Deductions *</label>
+      <input
+        type="number"
+        class="form-control"
+        formControlName="deductions"
+        placeholder="Enter deductions" />
+      <small class="text-danger" *ngIf="deductionsCtrl?.touched && deductionsCtrl?.invalid">
+        Enter valid deductions
+      </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Gross Salary</label>
+      <div class="form-control bg-light">{{ grossSalary }}</div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Net Salary</label>
+      <div class="form-control bg-light">{{ netSalary }}</div>
+    </div>
+
+    <button class="btn btn-primary me-2" type="submit" [disabled]="structureForm.invalid">
+      Save Structure
+    </button>
+
+    <button class="btn btn-secondary" type="button" (click)="resetForm()">
+      Reset
+    </button>
+
+  </form>
+
+</div>

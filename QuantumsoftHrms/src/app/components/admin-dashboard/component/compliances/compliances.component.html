@@ -1,0 +1,118 @@
+<div class="container compliance-page">
+
+  <div class="card compliance-card">
+    <div class="card-header">
+      <h4>{{ isEditMode ? 'Edit Compliance' : 'Add Compliance' }}</h4>
+    </div>
+
+    <div class="card-body">
+      <form [formGroup]="complianceForm" (ngSubmit)="submitForm()">
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label>Compliance Name *</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="complianceName"
+              placeholder="Enter compliance name"
+              [class.invalid]="complianceForm.get('complianceName')?.touched && complianceForm.get('complianceName')?.invalid">
+            <small class="error"
+              *ngIf="complianceForm.get('complianceName')?.touched && complianceForm.get('complianceName')?.invalid">
+              Compliance name is required
+            </small>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label>Compliance Type *</label>
+            <select
+              class="form-select"
+              formControlName="complianceType"
+              [class.invalid]="complianceForm.get('complianceType')?.touched && complianceForm.get('complianceType')?.invalid">
+              <option value="">Select type</option>
+              <option value="PF">PF</option>
+              <option value="ESI">ESI</option>
+              <option value="TDS">TDS</option>
+              <option value="PT">PT</option>
+              <option value="Gratuity">Gratuity</option>
+              <option value="Other">Other</option>
+            </select>
+            <small class="error"
+              *ngIf="complianceForm.get('complianceType')?.touched && complianceForm.get('complianceType')?.invalid">
+              Compliance type is required
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Description *</label>
+          <textarea
+            rows="3"
+            class="form-control"
+            placeholder="Enter compliance description"
+            formControlName="description"
+            [class.invalid]="complianceForm.get('description')?.touched && complianceForm.get('description')?.invalid">
+          </textarea>
+          <small class="error"
+            *ngIf="complianceForm.get('description')?.touched && complianceForm.get('description')?.invalid">
+            Description is required
+          </small>
+        </div>
+
+        <div class="form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="isActive">
+          <label class="form-check-label">Active</label>
+        </div>
+
+        <button class="btn btn-primary w-100" type="submit">
+          {{ isEditMode ? 'Update Compliance' : 'Save Compliance' }}
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="card compliance-card mt-4">
+    <div class="card-header">
+      <h4>Registered Compliances</h4>
+    </div>
+
+    <div class="card-body table-responsive">
+      <table class="table" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let c of compliances">
+            <td>{{ c.complianceName }}</td>
+            <td>{{ c.complianceType }}</td>
+            <td>{{ c.description }}</td>
+            <td>
+              <span class="badge"
+                [class.badge-active]="c.isActive"
+                [class.badge-inactive]="!c.isActive">
+                {{ c.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="editCompliance(c)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCompliance(c.complianceId!)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty" *ngIf="!loading && compliances.length === 0">
+        No compliances found
+      </div>
+    </div>
+  </div>
+
+</div>

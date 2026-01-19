@@ -1,0 +1,63 @@
+.payroll-process-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+}
+
+label {
+  font-weight: 500;
+}
+
+button {
+  min-width: 160px;
+}
+
+.alert {
+  font-size: 14px;
+}
+
+@media (max-width: 576px) {
+  .payroll-process-container {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991px) {
+  .payroll-process-container {
+    max-width: 720px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 992px) {
+  .payroll-process-container {
+    max-width: 900px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+}

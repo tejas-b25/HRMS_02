@@ -1,0 +1,39 @@
+<div class="report-container">
+
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <h2>Employee Report</h2>
+
+  <form #f="ngForm" (ngSubmit)="generate()" novalidate>
+
+    <div class="field">
+      <label>Export Format</label>
+
+      <select
+        name="exportType"
+        [(ngModel)]="exportType"
+        required
+        #exportCtrl="ngModel">
+
+        <option value="" disabled>Select export format</option>
+        <option value="csv">CSV</option>
+        <option value="excel">Excel</option>
+        <option value="pdf">PDF</option>
+      </select>
+
+      <small class="error" *ngIf="exportCtrl.touched && exportCtrl.invalid">
+        Export format is required
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="loading || f.invalid">
+      {{ loading ? 'Generating...' : 'Download Report' }}
+    </button>
+
+    <p class="status success" *ngIf="message">
+      {{ message }}
+    </p>
+
+  </form>
+
+</div>

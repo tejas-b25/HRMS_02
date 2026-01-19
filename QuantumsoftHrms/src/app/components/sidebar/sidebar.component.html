@@ -1,0 +1,91 @@
+<nav class="top-navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-left">
+    <img src="assets/logo.png" alt="logo" class="nav-logo" width="140" />
+    <span class="page-title">{{ currentSection }}</span>
+  </div>
+  <div class="navbar-right">
+    <!-- Quick Links Icon -->
+    <button class="icon-btn"  (click)="Onquicklinks()" title="Quick Links">
+      <!-- <i class="fa-solid fa-link"></i> -->
+       Quicklinks
+    </button>  
+    <!-- Notifications Bell Icon -->
+    <button class="icon-btn"(click)="notifications()"  title="Notifications">      
+      <i class="fa-solid fa-bell"></i>
+    </button>
+    <!-- Logout Icon -->     
+    <button class="icon-btn" (click)="logout()" title="Logout">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+  </div>  
+</nav> 
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-user">
+    <div class="avatar">
+      <i class="fa-solid fa-user"></i>
+    </div>
+    <div class="user-details" *ngIf="!isCollapsed">
+      <div class="user-name">Hi Priyanka</div>
+      <a routerLink="employee-profile">View My Info</a>
+    </div>
+     <div class="settings-icon toggle-btn" (click)="navigateToAccountInfo()" title="Account Info">
+    <i class="fa fa-cog" aria-hidden="true"></i>
+  </div>             
+    <!-- <div class="collaps">
+   <div class="collapse-icon toggle-btn" (click)="toggleCollapse()" title="Toggle Sidebar">
+    <i class="fa-solid" [ngClass]="isCollapsed? 'fa-chevron-right' : 'fa-chevron-left'"></i>
+  </div>, 
+  </div> -->
+  </div>          
+  <ul class="menu-list">                
+    <li *ngFor="let item of menu" class="menu-item-wrapper">
+      <a *ngIf="!item.children"         
+        [routerLink]="item.route"
+        routerLinkActive="active"       
+        class="menu-link"
+        (click)="closeAllDropdowns(); updateSection(item.label)">
+        <i [class]="item.icon"></i>         
+        <span class="menu-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+      </a>    
+      <!-- Dropdown menu parent -->
+      <div *ngIf="item.children"class="menu-link" (click)="toggleDropdown(item.label)">
+        <i [class]="item.icon"></i>
+        <span class="menu-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+        <span *ngIf="!isCollapsed" class="dropdown-arrow">
+          <i class="fa-solid" [ngClass]="openDropdown[item.label] ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </span>    
+      </div>        
+           <!-- Dropdown submenu --> 
+      <ul *ngIf="openDropdown[item.label] && !isCollapsed" class="submenu-list">
+        <li *ngFor="let child of item.children" class="submenu-item">
+          <a
+            [routerLink]="child.route"
+            routerLinkActive="active"
+            class="submenu-link"s
+            (click)="updateSection(child.label)">
+            {{ child.label }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

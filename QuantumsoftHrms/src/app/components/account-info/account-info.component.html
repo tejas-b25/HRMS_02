@@ -1,0 +1,221 @@
+<div class="account-info-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Account Information</h1>
+  </div>
+  <!-- Action Buttons Section at TOP -->
+  <div class="action-section-top">
+    <div class="action-buttons">
+      <button class="action-btn login-history-btn" (click)="toggleLoginHistory()">
+        📋 View Login History
+      </button>
+      <button class="action-btn change-password-btn" (click)="toggleChangePassword()">
+        🔐 Change Password
+      </button>
+    </div>                
+  </div>
+  <!-- Login History Section -->
+  <div *ngIf="showLoginHistory" class="info-card login-history">
+    <h3>Login History</h3>
+    <div class="login-history-list">
+      <div *ngFor="let login of accountInfo.loginHistory" class="login-item">
+        <div class="login-date">{{ login.date }}</div>
+        <div class="login-details">
+          <span class="login-device">{{ login.device }}</span>
+          <span class="login-location">{{ login.location }}</span>
+        </div>
+      </div>
+    </div>
+    <button class="close-btn" (click)="showLoginHistory = false">Close</button>
+  </div>
+  <!-- Change Password Section -->
+  <div *ngIf="showChangePassword" class="info-card change-password">
+    <h3>Change Password</h3>
+    <div class="password-form">
+      <div class="form-group">
+        <label>Current Password</label>
+        <input type="password" class="form-input" placeholder="Enter current password">
+      </div>
+      <div class="form-group">
+        <label>New Password</label>
+        <input type="password" class="form-input" placeholder="Enter new password">
+      </div>
+      <div class="form-group">
+        <label>Confirm New Password</label>
+        <input type="password" class="form-input" placeholder="Confirm new password">
+      </div>
+      <div class="form-actions">
+        <button class="save-btn">Update Password</button>
+        <button class="cancel-btn" (click)="showChangePassword = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <!-- Basic Information Card -->
+  <div class="info-card basic-info">
+    <div class="employee-header">
+      <h2 class="employee-name">{{ accountInfo.name }}</h2>
+      <div class="employee-id">Emp ID: {{ accountInfo.id }}</div>
+    </div>
+    <div class="basic-details-grid">
+      <div class="detail-item">
+        <span class="label">Official Birthday:</span>
+        <span class="value">{{ accountInfo.officialBirthday }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Department:</span>
+        <span class="value">{{ accountInfo.department }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Location:</span>
+        <span class="value">{{ accountInfo.location }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="label">Designation:</span>
+        <span class="value">{{ accountInfo.designation }}</span>
+      </div>
+    </div>
+  </div>
+  <!-- Divider -->
+  <div class="section-divider"></div>
+  <!-- My Profile Section -->
+  <div class="profile-section">
+    <h2 class="section-title">My Profile</h2>
+    <!-- Profile Information -->
+    <div class="info-card">
+      <h3 class="subsection-title">Profile</h3>
+      <!-- Nickname Field -->
+      <div class="field-group">
+        <div class="field-header">
+          <span class="field-label">Nickname</span>
+          <button class="edit-icon" 
+                  (click)="toggleEdit('nickname')"
+                  [disabled]="isAnyFieldEditing() && !editableFields.nickname">
+            ✏️
+          </button>
+        </div>
+        <div *ngIf="!editableFields.nickname" class="field-value">
+          <strong>{{ accountInfo.nickname }}</strong>
+        </div>
+        <div *ngIf="editableFields.nickname" class="edit-field">
+          <input type="text" 
+                 [(ngModel)]="editedAccountInfo.nickname" 
+                 class="edit-input"
+                 placeholder="Enter nickname">
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveField('nickname')">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit('nickname')">Cancel</button>
+          </div>
+        </div>
+      </div>           
+      <!-- Wish Me On Field -->
+      <div class="field-group">
+        <div class="field-header">
+          <span class="field-label">Wish me on</span>
+          <button class="edit-icon" 
+                  (click)="toggleEdit('wishMeOn')"
+                  [disabled]="isAnyFieldEditing() && !editableFields.wishMeOn">
+            ✏️
+          </button>
+        </div>
+        <div *ngIf="!editableFields.wishMeOn" class="field-value">
+          {{ accountInfo.wishMeOn }}
+        </div>
+        <div *ngIf="editableFields.wishMeOn" class="edit-field">
+          <input type="text" 
+                 [(ngModel)]="editedAccountInfo.wishMeOn" 
+                 class="edit-input"
+                 placeholder="Enter date">
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveField('wishMeOn')">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit('wishMeOn')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Timezone Section -->
+    <div class="info-card">
+      <h3 class="subsection-title">Timezone</h3>
+      
+      <div class="field-group">
+        <div class="field-header">
+          <span class="field-label">Timezone</span>
+          <button class="edit-icon" 
+                  (click)="toggleEdit('timezone')"
+                  [disabled]="isAnyFieldEditing() && !editableFields.timezone">
+            ✏️
+          </button>                                                                       
+        </div>
+        <div *ngIf="!editableFields.timezone" class="field-value">
+          {{ accountInfo.timezone }}
+        </div>
+        <div *ngIf="editableFields.timezone" class="edit-field">
+          <select [(ngModel)]="editedAccountInfo.timezone" class="edit-input">
+            <option value="IST (UTC+5:30)">IST (UTC+5:30)</option>
+            <option value="PST (UTC-8)">PST (UTC-8)</option>
+            <option value="EST (UTC-5)">EST (UTC-5)</option>
+            <option value="GMT (UTC+0)">GMT (UTC+0)</option>
+          </select>
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveField('timezone')">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit('timezone')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Biography Section -->
+    <div class="info-card">
+      <h3 class="subsection-title">Biography</h3>
+      <div class="field-group">
+        <div class="field-header">
+          <span class="field-label">Biography</span>
+          <button class="edit-icon" 
+                  (click)="toggleEdit('biography')"
+                  [disabled]="isAnyFieldEditing() && !editableFields.biography">
+            ✏️
+          </button>
+        </div>
+        <div *ngIf="!editableFields.biography" class="field-value">
+          {{ accountInfo.biography || 'No biography added' }}
+        </div>
+        <div *ngIf="editableFields.biography" class="edit-field">
+          <textarea [(ngModel)]="editedAccountInfo.biography" 
+                    class="edit-textarea"
+                    placeholder="Enter your biography"
+                    rows="4"></textarea>
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveField('biography')">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit('biography')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Social Media Section -->
+    <div class="info-card">
+      <h3 class="subsection-title">Social Media</h3>
+      
+      <div class="field-group">
+        <div class="field-header">
+          <span class="field-label">Social Media</span>
+          <button class="edit-icon" 
+                  (click)="toggleEdit('socialMedia')"
+                  [disabled]="isAnyFieldEditing() && !editableFields.socialMedia">
+            ✏️
+          </button>
+        </div>
+        <div *ngIf="!editableFields.socialMedia" class="field-value">
+          {{ accountInfo.socialMedia || 'No social media added' }}
+        </div>
+        <div *ngIf="editableFields.socialMedia" class="edit-field">
+          <input type="text" 
+                 [(ngModel)]="editedAccountInfo.socialMedia" 
+                 class="edit-input"
+                 placeholder="Enter social media links">
+          <div class="edit-actions">
+            <button class="save-btn" (click)="saveField('socialMedia')">Save</button>
+            <button class="cancel-btn" (click)="cancelEdit('socialMedia')">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

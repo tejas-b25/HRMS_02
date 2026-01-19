@@ -1,0 +1,68 @@
+<!-- Top Navbar -->
+<nav class="top-navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-left">
+    <img src="assets/logo.png" class="nav-logo" />
+    <span class="page-title">{{ currentSection }}</span>
+  </div>
+
+  <div class="navbar-right">
+    <button class="icon-btn">Quicklinks</button>
+    <button class="icon-btn"><i class="fa-solid fa-bell"></i></button>
+    <button class="icon-btn" (click)="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <div class="sidebar-user">
+    <div class="avatar"><i class="fa-solid fa-user"></i></div>
+    <div class="user-details">
+      <div class="user-name">Hi Priyanka</div>
+      <a>View My Info</a>
+    </div>
+  </div>
+
+  <ul class="menu-list">
+    <li *ngFor="let item of menu" class="menu-item-wrapper">
+
+      <!-- Normal Link -->
+      <a *ngIf="!item.children"
+         [routerLink]="item.route"
+         class="menu-link"
+         routerLinkActive="active"
+         (click)="updateSection(item.label)">
+        <i [class]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+      </a>
+
+      <!-- Dropdown Parent -->
+      <div *ngIf="item.children"
+           class="menu-link"
+           (click)="toggleDropdown(item.label)">
+        <i [class]="item.icon"></i>
+        <span class="menu-label">{{ item.label }}</span>
+        <span class="dropdown-arrow">
+          <i class="fa-solid"
+             [ngClass]="openDropdown[item.label] ? 'fa-chevron-up' : 'fa-chevron-down'">
+          </i>
+        </span>
+      </div>
+
+      <!-- Submenu -->
+      <ul *ngIf="openDropdown[item.label]" class="submenu-list">
+        <li *ngFor="let child of item.children" class="submenu-item">
+          <a
+            class="submenu-link"
+            [routerLink]="child.route"
+            routerLinkActive="active"
+            (click)="updateSection(child.label)">
+            {{ child.label }}
+          </a>
+        </li>
+      </ul>
+
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,255 @@
+<div class="add-employee-container p-4">
+  <button class="btn btn-outline-secondary mb-3" (click)="onBack()">← Back</button>
+
+  <h2 class="mb-4">Add Employee</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+  </div>
+
+  <form #empForm="ngForm" (ngSubmit)="onSubmit(empForm)" novalidate>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-4">
+        <label>First Name *</label>
+        <input
+          type="text"
+          class="form-control"
+          name="firstName"
+          placeholder="Enter first name"
+          [(ngModel)]="formData.firstName"
+          #firstName="ngModel"
+          required
+          pattern="^[A-Za-z ]+$"
+          minlength="2"
+          [class.invalid]="firstName.invalid && firstName.touched">
+
+        <small class="error" *ngIf="firstName.invalid && firstName.touched">
+          Alphabets only (min 2 characters)
+        </small>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="lastName"
+          placeholder="Enter last name"
+          [(ngModel)]="formData.lastName"
+          pattern="^[A-Za-z ]+$"
+          #lastName="ngModel"
+          [class.invalid]="lastName.invalid && lastName.touched">
+
+        <small class="error" *ngIf="lastName.invalid && lastName.touched">
+          Alphabets only
+        </small>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Username *</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Enter username"
+          [(ngModel)]="formData.username"
+          #username="ngModel"
+          required
+          [class.invalid]="username.invalid && username.touched">
+
+        <small class="error" *ngIf="username.invalid && username.touched">
+          Username is required
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-4">
+        <label>Password *</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Minimum 6 characters"
+          [(ngModel)]="formData.password"
+          #password="ngModel"
+          required
+          minlength="6"
+          [class.invalid]="password.invalid && password.touched">
+
+        <small class="error" *ngIf="password.invalid && password.touched">
+          Minimum 6 characters required
+        </small>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Date of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          name="dateOfBirth"
+          [(ngModel)]="formData.dateOfBirth">
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Gender</label>
+        <select class="form-select" name="gender" [(ngModel)]="formData.gender">
+          <option value="">Select gender</option>
+          <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-4">
+        <label>Contact Number *</label>
+        <input
+          type="text"
+          class="form-control"
+          name="contactNumber"
+          placeholder="10-digit mobile number"
+          [(ngModel)]="formData.contactNumber"
+          #contactNumber="ngModel"
+          required
+          pattern="^[0-9]{10}$"
+          [class.invalid]="contactNumber.invalid && contactNumber.touched">
+
+        <small class="error" *ngIf="contactNumber.invalid && contactNumber.touched">
+          Enter valid 10-digit number
+        </small>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Email *</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          placeholder="example@email.com"
+          [(ngModel)]="formData.email"
+          #email="ngModel"
+          required
+          [class.invalid]="email.invalid && email.touched">
+
+        <small class="error" *ngIf="email.invalid && email.touched">
+          Enter a valid email
+        </small>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Blood Group</label>
+        <input
+          type="text"
+          class="form-control"
+          name="bloodGroup"
+          placeholder="e.g. O+"
+          [(ngModel)]="formData.bloodGroup">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Address</label>
+      <textarea
+        class="form-control"
+        rows="2"
+        placeholder="Enter address"
+        name="address"
+        [(ngModel)]="formData.address"></textarea>
+    </div>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-4">
+        <label>Date of Joining</label>
+        <input
+          type="date"
+          class="form-control"
+          name="dateOfJoining"
+          [(ngModel)]="formData.dateOfJoining">
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Department</label>
+        <select class="form-select" name="department" [(ngModel)]="formData.department">
+          <option value="">Select department</option>
+          <option *ngFor="let d of departments" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Designation</label>
+        <select class="form-select" name="designation" [(ngModel)]="formData.designation">
+          <option value="">Select designation</option>
+          <option *ngFor="let des of designations" [value]="des">{{ des }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-4">
+        <label>Employment Type *</label>
+        <select class="form-select" name="employmentType" [(ngModel)]="formData.employmentType" required>
+          <option value="">Select type</option>
+          <option *ngFor="let et of employmentTypes" [value]="et">{{ et }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Role *</label>
+        <select class="form-select" name="role" [(ngModel)]="formData.role" required>
+          <option value="">Select role</option>
+          <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label>Status</label>
+        <select class="form-select" name="status" [(ngModel)]="formData.status">
+          <option value="ACTIVE">ACTIVE</option>
+          <option value="INACTIVE">INACTIVE</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="mb-3 col-md-6">
+        <label>Reporting Manager ID *</label>
+        <input
+          type="number"
+          class="form-control"
+          name="reportingManagerId"
+          placeholder="Enter manager user ID"
+          [(ngModel)]="formData.reportingManagerId"
+          required>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label>HRBP ID *</label>
+        <input
+          type="number"
+          class="form-control"
+          name="hrbpId"
+          placeholder="Enter HRBP user ID"
+          [(ngModel)]="formData.hrbpId"
+          required>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button type="button" class="btn btn-outline-secondary" (click)="onBack()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="empForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Saving...' : 'Save Employee' }}
+      </button>
+    </div>
+
+  </form>
+</div>

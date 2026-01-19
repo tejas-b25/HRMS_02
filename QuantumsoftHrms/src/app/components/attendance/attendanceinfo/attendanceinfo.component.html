@@ -1,0 +1,198 @@
+<div class="maincontent">
+
+<div class="attendance-info-wrapper">
+
+  <!-- Header -->
+  <!-- <div class="header-section">
+    <h2>Attendance Info</h2>
+    <div class="header-actions">
+      <span class="quick-links">Quick Links ▾</span>
+      <i class="icon-bell">🔔</i>
+      <i class="icon-logout">⏻</i>
+    </div>
+  </div> -->
+
+  <!-- Metrics -->
+  <div class="metrics-section">
+    <div class="metric-card">
+      <div class="metric-label">AVG. WORK HRS</div>
+      <div class="metric-value">{{ avgWork }}</div>
+      <div class="metric-change">+16% From Last Month</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">AVG. ACTUAL WORK HRS</div>
+      <div class="metric-value">{{ avgActualWork }}</div>
+      <div class="metric-change">+16% From Last Month</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">PENALTY DAYS</div>
+      <div class="metric-value">{{ penaltyDays }}</div>
+    </div>
+    <div class="insights-link">
+      <a (click)="goToInsights()">+3 INSIGHTS</a>
+    </div>
+  </div>
+
+  <!-- Main layout with scrollable panels -->
+  <div class="main-flex-layout">
+
+    <!-- Left panel: Calendar + Legends -->
+    <div class="left-panel">
+
+      <div class="calendar-panel">
+        <div class="calendar-controls">
+          <button (click)="prevMonth()" style="color: rgb(19, 172, 172);">‹ Prev</button>
+          <span>{{ months[currentMonth] }} {{ currentYear }}</span>
+          <button (click)="nextMonth()" style="color: blue;">Next ›</button>
+        </div>
+        <div class="calendar-grid">
+          <div class="cell header" *ngFor="let dn of dayNames">{{ dn }}</div>
+          <div class="cell blank" *ngFor="let b of blanks"></div>
+          <div class="cell day" *ngFor="let d of daysInMonth" [ngClass]="getStatusClass(dayDate(d))"
+            (click)="selectDate(d)">
+            <div class="day-number">{{ d }}</div>
+            <div class="day-label">{{ getLabel(dayDate(d)) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legends-container">
+        <h5>Legends</h5>
+        <div class="legend-grid">
+          <div class="legend-item"><span class="icon status-present">P</span> Present</div>
+          <div class="legend-item"><span class="icon status-absent">A</span> Absent</div>
+          <div class="legend-item"><span class="icon status-off">O</span> Off Day</div>
+          <div class="legend-item"><span class="icon status-rest">R</span> Rest Day</div>
+          <div class="legend-item"><span class="icon status-leave">L</span> Leave</div>
+          <div class="legend-item"><span class="icon status-on-duty">OD</span> On Duty</div>
+          <div class="legend-item"><span class="icon status-holiday">H</span> Holiday</div>
+          <div class="legend-item"><span class="icon alert-deduction"></span> Alert for Deduction</div>
+          <div class="legend-item"><span class="icon deduction"></span> Deduction</div>
+          <div class="legend-item"><span class="icon status-unknown">?</span> Status Unknown</div>
+          <div class="legend-item"><span class="icon overtime">🕒</span> Overtime</div>
+          <div class="legend-item"><span class="icon override">📝</span> Override</div>
+          <div class="legend-item"><span class="icon permission"></span> Permission</div>
+          <div class="legend-item"><span class="icon ignored"></span> Ignored</div>
+          <div class="legend-item"><span class="icon grace">Grace</span></div>
+        </div>
+
+        <div class="section">
+          <h5>Day Type</h5>
+          <div class="legend-grid">
+            <div class="legend-item"><span class="icon rest-day-icon">☕</span> Rest Day</div>
+            <div class="legend-item"><span class="icon off-day-icon">📺</span> Off Day</div>
+            <div class="legend-item"><span class="icon holiday-icon">☂</span> Holiday</div>
+            <div class="legend-item"><span class="icon half-day-icon">▯▯</span> Half Day</div>
+            <div class="legend-item"><span class="icon plant-shutdown">✖</span> Plant Shutdown</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h5>Leave Type</h5>
+          <div class="legend-grid">
+            <div class="legend-item"><span class="icon paid-leave">PL</span> Paid Leaves</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right panel: Details sections with cards -->
+    <div class="right-panel">
+
+      <div class="card section">
+        <h5>Status Details</h5>
+        <table class="details-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ getStatusLabel(selectedEntry?.status) || '-' }}</td>
+              <td>{{ selectedEntry?.remarks || '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card section">
+        <h5>Session Details</h5>       <!--14px -->
+        <table class="details-table">
+          <thead>
+            <tr>
+              <th>Session</th>
+              <th>Session Timing</th>
+              <th>First In</th>
+              <th>Last Out</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Session 1</td>
+              <td>09:30 - 14:30</td>
+              <td>{{ selectedEntry?.firstIn || '-' }}</td>
+              <td>{{ selectedEntry?.lastOut || '-' }}</td>
+            </tr>
+            <tr>
+              <td>Session 2</td>
+              <td>14:31 - 18:30</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card section">
+        <h5>Permission Details</h5>
+        <div class="table-scroll">
+          <table class="details-table permissions-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Applied</th>
+                <th>Approved</th>
+                <th>Considered</th>
+                <th>From Date</th>
+                <th>To Date</th>
+                <th>Applied By</th>
+                <th>Applied On</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="permissions.length === 0">
+                <td colspan="9" class="no-data">-</td>
+              </tr>
+              <tr *ngFor="let perm of selectedEntry?.permissions">
+                <td>{{ perm.type || '-' }}</td>
+                <td>{{ perm.applied || '-' }}</td>
+                <td>{{ perm.approved || '-' }}</td>
+                <td>{{ perm.considered || '-' }}</td>
+                <td>{{ perm.fromDate || '-' }}</td>
+                <td>{{ perm.toDate || '-' }}</td>
+                <td>{{ perm.appliedBy || '-' }}</td>
+                <td>{{ perm.appliedOn || '-' }}</td>
+                <td>{{ perm.reason || '-' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card section">
+        <h5>Swipes (Total: {{ selectedEntry?.totalWork || '00:00' }} hrs)</h5>
+        <!-- Add swipe details here if you have them -->
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+</div>

@@ -1,0 +1,163 @@
+<section>
+  <div class="container" [class.right-panel-active]="rightPanelActive" id="container">
+    <div class="form-container sign-up-container">
+      <form #signupForm="ngForm" (ngSubmit)="onSignup()" novalidate>
+        <div class="logo">
+          <img src="assets/logo.png" alt="logo" class="nav-logo" height="40" width="160" />
+        </div>
+        <br><br>
+        <h1>Create Account</h1>
+        <br>
+       
+        <!-- First Name -->
+        <input type="text" placeholder="First Name" [(ngModel)]="signupObj.firstName" name="firstName"
+          required pattern="^[A-Za-z]+$" #firstName="ngModel" (keypress)="allowOnlyLetters($event)" />
+        <div *ngIf="firstName.invalid && firstName.touched" style="color:red">
+          First Name is required & Only letters allowed
+        </div>
+ 
+        <!-- Last Name -->
+        <input type="text" placeholder="Last Name" [(ngModel)]="signupObj.lastName" name="lastName"
+          pattern="^[A-Za-z]+$" #lastName="ngModel" (keypress)="allowOnlyLetters($event)" />
+        <div *ngIf="lastName.invalid && lastName.touched" style="color:red">
+          Only letters allowed for Last Name
+        </div>
+ 
+        <!-- Email -->
+        <input type="email" placeholder="Email" [(ngModel)]="signupObj.email" name="email" required #email="ngModel" />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" style="color:red">
+          <div *ngIf="email.errors?.['required']">Email is required</div>
+          <div *ngIf="email.errors?.['email']">Invalid email format</div>
+        </div>
+ 
+        <!-- Password -->
+        <input type="password" placeholder="Password" [(ngModel)]="signupObj.password" name="password"
+          required maxlength="12" minlength="6" #password="ngModel" />
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" style="color:red">
+          <div *ngIf="password.errors?.['required']">Password is required</div>
+          <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters</div>
+          <div *ngIf="password.errors?.['maxlength']">Password cannot exceed 12 characters</div>
+        </div>
+ 
+        <!-- Username (Optional) -->
+        <input type="text" placeholder="Username (Optional)" [(ngModel)]="signupObj.username" name="username" />
+       
+        <br>              
+        <button type="submit" [disabled]="isLoading">
+          {{ isLoading ? 'Creating Account...' : 'Sign Up' }}
+        </button>
+ 
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" style="color:red; margin-top: 10px; padding: 10px; background: #fee; border-radius: 5px;">
+          {{ errorMessage }}
+        </div>
+       
+        <button type="button" class="ghost" (click)="toggleSignIn()">Already have an account? Log In</button>
+      </form>
+    </div>          
+   
+    <div class="form-container sign-in-container">
+      <form #signinForm="ngForm">
+        <div class="logo">
+          <img src="assets/logo.png" alt="logo" class="nav-logo" width="140" />
+        </div>
+        <h1>Log in</h1>
+        <br>
+ 
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" style="color:red; margin-bottom: 15px; padding: 10px; background: #fee; border-radius: 5px;">
+          {{ errorMessage }}
+        </div>
+       
+        <div class="login-category" *ngIf="!activeLogin">
+          <button type="button" class="admin-btn" (click)="showAdminLogin()">Admin Login</button>
+          <div class="btn-space">  </div>
+          <button type="button" class="user-btn" (click)="showUserLogin()">User Login</button>
+          <div class="btn-space">  </div>
+          <!-- <button type="button" class="signup-btn" (click)="toggleSignUp()">Sign up</button> -->
+        </div>
+<!--        
+        Demo Credentials
+        <div *ngIf="!activeLogin" style="text-align: center; margin-top: 15px;">
+          <p style="color: #666; font-size: 12px; margin-bottom: 8px;">Demo Credentials:</p>
+          <div style="display: flex; gap: 5px; justify-content: center; flex-wrap: wrap;">
+            <button type="button" (click)="fillDemoCredentials('superadmin')"
+                    style="padding: 4px 8px; font-size: 10px; background: #e74c3c; color: white; border: none; border-radius: 4px;">
+              Super Admin
+            </button>
+            <button type="button" (click)="fillDemoCredentials('admin')"
+                    style="padding: 4px 8px; font-size: 10px; background: #3498db; color: white; border: none; border-radius: 4px;">
+              Admin
+            </button>
+            <button type="button" (click)="fillDemoCredentials('hr')"
+                    style="padding: 4px 8px; font-size: 10px; background: #f39c12; color: white; border: none; border-radius: 4px;">
+              HR Admin
+            </button>
+            <button type="button" (click)="fillDemoCredentials('employee')"
+                    style="padding: 4px 8px; font-size: 10px; background: #27ae60; color: white; border: none; border-radius: 4px;">
+              Employee
+            </button>
+          </div>
+        </div> -->
+       
+        <div class="user-login" *ngIf="activeLogin === 'user'">
+          <!-- Changed from email to username -->
+          <input type="text" placeholder="Username" [(ngModel)]="loginObj.username" name="userMail"
+            required #loginUsername="ngModel" />
+          <div *ngIf="loginUsername.invalid && (loginUsername.dirty || loginUsername.touched)" style="color:red">
+            Username is required
+          </div>
+         
+          <input type="password" placeholder="Password" [(ngModel)]="loginObj.password" name="userPass"
+            required minlength="6" maxlength="14" #loginPassword="ngModel" />
+          <div *ngIf="loginPassword.invalid && (loginPassword.dirty || loginPassword.touched)" style="color:red">
+            <div *ngIf="loginPassword.errors?.['required']">Password is required</div>
+            <div *ngIf="loginPassword.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
+         
+          <a routerLink="/authentication/forget">Forgot your password?</a><br><br>
+          <button type="button" (click)="onuserLogin()" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Log In' }}
+          </button><br>
+          <button type="button" class="back-btn" (click)="resetLogin()"><i class="fa-solid fa-backward"></i></button>
+        </div>
+       
+        <div class="admin-login" *ngIf="activeLogin === 'admin'">
+          <!-- Changed from email to username -->
+          <input type="text" placeholder="Username" [(ngModel)]="loginObj.username" name="adminMail"
+            required #adminUsername="ngModel" />
+          <div *ngIf="adminUsername.invalid && (adminUsername.dirty || adminUsername.touched)" style="color:red">
+            Username is required
+          </div>
+         
+          <input type="password" placeholder="Password" [(ngModel)]="loginObj.password" name="adminPass"
+            required minlength="6" maxlength="14" #adminPassword="ngModel" />
+          <div *ngIf="adminPassword.invalid && (adminPassword.dirty || adminPassword.touched)" style="color:red">
+            <div *ngIf="adminPassword.errors?.['required']">Password is required</div>
+            <div *ngIf="adminPassword.errors?.['minlength']">Password must be at least 6 characters</div>
+          </div>
+         
+          <a routerLink="/authentication/forget">Forgot your password?</a><br><br>
+          <button type="button" (click)="onadminLogin()" [disabled]="isLoading">
+            {{ isLoading ? 'Logging in...' : 'Log In' }}
+          </button><br><br>
+          <button type="button" class="back-btn" (click)="resetLogin()"><i class="fa-solid fa-backward"></i></button>
+        </div>
+      </form>
+    </div>
+   
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+        </div>
+        <div class="overlay-panel overlay-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+</footer>
+<router-outlet></router-outlet>

@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 2px solid #e53935;
+  background-color: #fff5f5;
+}
+
+.text-danger {
+  font-size: 12px;
+}
+
+button {
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+@media (max-width: 575px) {
+  h4 {
+    font-size: 18px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .row > div {
+    margin-bottom: 12px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  table tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border: none;
+  }
+
+  table tbody td::before {
+    font-weight: 600;
+    color: #555;
+  }
+
+  table tbody td:nth-child(1)::before { content: "ID"; }
+  table tbody td:nth-child(2)::before { content: "Employee"; }
+  table tbody td:nth-child(3)::before { content: "Type"; }
+  table tbody td:nth-child(4)::before { content: "Start"; }
+  table tbody td:nth-child(5)::before { content: "End"; }
+  table tbody td:nth-child(6)::before { content: "Days"; }
+  table tbody td:nth-child(7)::before { content: "Status"; }
+  table tbody td:nth-child(8)::before { content: "Reason"; }
+  table tbody td:nth-child(9)::before { content: "Actions"; }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  .container {
+    padding: 15px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  button {
+    min-width: 140px;
+  }
+
+  .row > div {
+    margin-bottom: 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding: 20px;
+  }
+
+  h4 {
+    font-size: 22px;
+  }
+
+  button {
+    min-width: 160px;
+  }
+}

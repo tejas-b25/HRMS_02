@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Edit Profile</h2>
+  <form (ngSubmit)="onSubmit()">
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="employee.name" name="name" required />
+
+    <label>Designation:</label>
+    <input type="text" [(ngModel)]="employee.designation" name="designation" required />
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="employee.email" name="email" required />
+
+    <label>Phone:</label>
+    <input type="tel" [(ngModel)]="employee.phone" name="phone" required />
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+

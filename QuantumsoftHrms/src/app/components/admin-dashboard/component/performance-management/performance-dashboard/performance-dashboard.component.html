@@ -1,0 +1,160 @@
+<div class="dashboard-wrapper">
+
+  <div class="card">
+    <h3>Create Performance Dashboard</h3>
+
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+
+      <div class="grid">
+
+        <div>
+          <input
+            name="departmentName"
+            [(ngModel)]="form.departmentName"
+            placeholder="Department name"
+            required
+            pattern="^[a-zA-Z ]+$"
+            #dept="ngModel"
+            [class.invalid]="dept.touched && dept.invalid">
+          <small *ngIf="dept.touched && dept.invalid" class="error">
+            Only letters allowed
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            name="avgScore"
+            [(ngModel)]="form.avgScore"
+            placeholder="Average score"
+            required
+            min="0"
+            max="100"
+            #avg="ngModel"
+            [class.invalid]="avg.touched && avg.invalid">
+          <small *ngIf="avg.touched && avg.invalid" class="error">
+            0 – 100 required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            name="totalEmployees"
+            [(ngModel)]="form.totalEmployees"
+            placeholder="Total employees"
+            required
+            min="1"
+            #emp="ngModel"
+            [class.invalid]="emp.touched && emp.invalid">
+          <small *ngIf="emp.touched && emp.invalid" class="error">
+            Must be greater than 0
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            name="topScore"
+            [(ngModel)]="form.topScore"
+            placeholder="Top score"
+            required
+            min="0"
+            max="100"
+            #top="ngModel"
+            [class.invalid]="top.touched && top.invalid">
+          <small *ngIf="top.touched && top.invalid" class="error">
+            0 – 100 required
+          </small>
+        </div>
+
+        <div>
+          <input
+            type="number"
+            name="bottomScore"
+            [(ngModel)]="form.bottomScore"
+            placeholder="Bottom score"
+            required
+            min="0"
+            max="100"
+            #bottom="ngModel"
+            [class.invalid]="bottom.touched && bottom.invalid">
+          <small *ngIf="bottom.touched && bottom.invalid" class="error">
+            0 – 100 required
+          </small>
+        </div>
+
+        <div>
+          <input
+            name="reviewPeriod"
+            [(ngModel)]="form.reviewPeriod"
+            placeholder="Review period (Q1-2025)"
+            required
+            pattern="^[A-Za-z0-9-]+$"
+            #period="ngModel"
+            [class.invalid]="period.touched && period.invalid">
+          <small *ngIf="period.touched && period.invalid" class="error">
+            Format like Q1-2025
+          </small>
+        </div>
+
+      </div>
+
+      <button type="submit">Save Dashboard</button>
+
+    </form>
+  </div>
+
+  <div class="filters">
+    <input
+      placeholder="Filter by department"
+      [(ngModel)]="filterDepartment"
+      (input)="filterByDepartment()">
+
+    <input
+      placeholder="Filter by period"
+      [(ngModel)]="filterPeriod"
+      (input)="filterByPeriod()">
+  </div>
+
+  <div class="card">
+    <h3>Dashboard Summary</h3>
+
+    <table *ngIf="dashboards.length">
+      <thead>
+        <tr>
+          <th>Department</th>
+          <th>Avg</th>
+          <th>Employees</th>
+          <th>Top</th>
+          <th>Bottom</th>
+          <th>Period</th>
+          <th>Generated</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let d of dashboards">
+          <td>{{ d.departmentName }}</td>
+          <td>{{ d.avgScore }}</td>
+          <td>{{ d.totalEmployees }}</td>
+          <td>{{ d.topScore }}</td>
+          <td>{{ d.bottomScore }}</td>
+          <td>{{ d.reviewPeriod }}</td>
+          <td>{{ d.generatedAt | date:'short' }}</td>
+          <td>
+            <button class="delete" (click)="delete(d.dashboardId!)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p *ngIf="!dashboards.length" class="empty">
+      No dashboard summaries found
+    </p>
+  </div>
+
+</div>

@@ -1,0 +1,76 @@
+<div class="leave-calendar-container">
+  <div class="header">
+    <div class="filter">
+      <label>Filter Type</label>
+      <select [(ngModel)]="filterType" (change)="updateCalendar()">
+        <option value="Me">Me</option>
+        <option value="My Team">My Team</option>
+      </select>
+    </div>                  
+    <div class="month-year-selector">
+      <label>Month</label>
+      <select [(ngModel)]="currentMonth" (change)="onMonthOrYearChange()">
+        <option *ngFor="let m of months; let i = index" [value]="i">{{ m }}</option>
+      </select>
+      <label>Year</label>
+      <select [(ngModel)]="currentYear" (change)="onMonthOrYearChange()">
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
+    </div>      
+  </div>          
+  <div class="calendar">   
+    <div class="weekdays">
+      <div *ngFor="let day of ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']">{{ day }}</div>
+    </div>
+    <div class="days">  
+      <div
+        *ngFor="let day of days"
+        class="day"
+        [class.empty]="!day"
+        [class.leave]="day?.hasLeave"
+        [class.casual]="day?.leaveType === 'casual'"
+        [class.sick]="day?.leaveType === 'sick'"
+        [class.paid]="day?.leaveType === 'paid'"
+        [class.weekend]="day?.isWeekend"
+        [class.holiday]="day?.isHoliday"
+        [class.disabled]="day?.isWeekend"
+        (click)="selectDate(day)"
+      >                            
+        <span *ngIf="day" style="font-weight: bold;">{{ day.date }}</span>
+        <span *ngIf="day?.isHoliday" style="font-size: 10px; margin-top: 2px;">{{ getHolidayName(day) }}</span>
+      </div>
+    </div>
+  </div>                           
+  <div class="transactions" *ngIf="selectedDate">
+    <h4>Leave Transactions for {{ selectedDate }}</h4>
+    <table *ngIf="selectedLeaves.length > 0">
+      <thead>       
+        <tr>             
+          <th>Type</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Days</th>
+          <th>Reason</th>
+        </tr>
+      </thead>        
+      <tbody>                      
+        <tr *ngFor="let l of selectedLeaves">
+          <td>{{ l.type }}</td>
+          <td>{{ l.fromDate }}</td>
+          <td>{{ l.toDate }}</td>
+          <td>{{ l.days }}</td>
+          <td>{{ l.reason }}</td>
+        </tr>
+      </tbody>                 
+    </table>                
+    <p *ngIf="selectedLeaves.length === 0">No leaves on this date.</p>
+  </div>           
+  <div class="legend">
+    <span class="dot sick"></span> Sick Leave
+    <span class="dot casual"></span> Casual Leave
+    <span class="dot paid"></span> Paid Leave
+  </div>
+</div>            
+<footer>           
+  <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+</footer>

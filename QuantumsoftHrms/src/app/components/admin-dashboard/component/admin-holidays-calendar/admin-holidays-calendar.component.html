@@ -1,0 +1,115 @@
+<form #f="ngForm" (ngSubmit)="saveHoliday(f)" novalidate class="modal-form">
+
+  <div class="form-group">
+    <label>Holiday Name *</label>
+    <input
+      type="text"
+      name="holidayName"
+      [(ngModel)]="holidayForm.holidayName"
+      required
+      minlength="3"
+      pattern="^[a-zA-Z ]+$"
+      placeholder="e.g. Independence Day"
+      #holidayName="ngModel"
+      [class.invalid]="holidayName.invalid && holidayName.touched">
+
+    <small class="error" *ngIf="holidayName.invalid && holidayName.touched">
+      Holiday name required (alphabets only, min 3 characters)
+    </small>
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group">
+      <label>Date *</label>
+      <input
+        type="date"
+        name="holidayDate"
+        [(ngModel)]="holidayForm.holidayDate"
+        required
+        #holidayDate="ngModel"
+        [class.invalid]="holidayDate.invalid && holidayDate.touched">
+
+      <small class="error" *ngIf="holidayDate.invalid && holidayDate.touched">
+        Holiday date is required
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label>Region *</label>
+      <input
+        type="text"
+        name="region"
+        [(ngModel)]="holidayForm.region"
+        required
+        pattern="^[a-zA-Z ]+$"
+        placeholder="India / Dubai"
+        #region="ngModel"
+        [class.invalid]="region.invalid && region.touched">
+
+      <small class="error" *ngIf="region.invalid && region.touched">
+        Region required (alphabets only)
+      </small>
+    </div>
+
+  </div>
+
+  <div class="form-row">
+
+    <div class="form-group">
+      <label>Holiday Type *</label>
+      <select
+        name="holidayType"
+        [(ngModel)]="holidayForm.holidayType"
+        required
+        #holidayType="ngModel"
+        [class.invalid]="holidayType.invalid && holidayType.touched">
+
+        <option value="">Select type</option>
+        <option>NATIONAL</option>
+        <option>FESTIVAL</option>
+        <option>OPTIONAL</option>
+        <option>CUSTOM</option>
+      </select>
+
+      <small class="error" *ngIf="holidayType.invalid && holidayType.touched">
+        Holiday type is required
+      </small>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <label>
+        <input
+          type="checkbox"
+          name="optional"
+          [(ngModel)]="holidayForm.optional">
+        Optional Holiday
+      </label>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <textarea
+      name="description"
+      [(ngModel)]="holidayForm.description"
+      placeholder="Short description (optional)">
+    </textarea>
+  </div>
+
+  <div class="modal-actions">
+    <button type="button"
+            class="btn cancel"
+            (click)="showModal=false">
+      Cancel
+    </button>
+
+    <button type="submit"
+            class="btn primary"
+            [disabled]="f.invalid">
+      {{ isEditMode ? 'Update Holiday' : 'Save Holiday' }}
+    </button>
+  </div>
+
+</form>

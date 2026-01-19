@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+}
+
+.leave-type-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.form-control.ng-invalid.ng-touched,
+.form-select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 2px solid #e53935;
+  background-color: #fff5f5;
+}
+
+.text-danger {
+  font-size: 12px;
+}
+
+button {
+  border-radius: 8px;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+@media (max-width: 575px) {
+  h2 {
+    font-size: 18px;
+  }
+
+  .leave-type-container {
+    padding: 10px;
+  }
+
+  .row > div {
+    margin-bottom: 12px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tbody tr {
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+
+  table tbody td {
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    padding: 6px 0;
+  }
+
+  table tbody td::before {
+    font-weight: 600;
+    color: #555;
+  }
+
+  table tbody td:nth-child(1)::before { content: "ID"; }
+  table tbody td:nth-child(2)::before { content: "Name"; }
+  table tbody td:nth-child(3)::before { content: "Description"; }
+  table tbody td:nth-child(4)::before { content: "Annual Limit"; }
+  table tbody td:nth-child(5)::before { content: "Carry Forward"; }
+  table tbody td:nth-child(6)::before { content: "Encashable"; }
+  table tbody td:nth-child(7)::before { content: "Active"; }
+  table tbody td:nth-child(8)::before { content: "Actions"; }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  .leave-type-container {
+    padding: 15px;
+  }
+
+  button {
+    min-width: 140px;
+  }
+
+  .row > div {
+    margin-bottom: 12px;
+  }
+}
+
+@media (min-width: 992px) {
+  h2 {
+    font-size: 22px;
+  }
+
+  .leave-type-container {
+    padding: 20px;
+  }
+
+  button {
+    min-width: 160px;
+  }
+}

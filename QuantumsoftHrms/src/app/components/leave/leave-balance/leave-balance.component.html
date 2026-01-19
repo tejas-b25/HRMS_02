@@ -1,0 +1,93 @@
+<div *ngIf="!showDetails">
+  <div class="top-bar">
+    <button class="btn btn-outline-primary" (click)="applyLeave()">Apply</button>
+    <button class="btn btn-primary" (click)="downloadReport()">
+      <i class="bi bi-download"></i>
+    </button>
+    <select class="year-select">
+      <option>2025</option>
+      <option>2024</option>
+      <option>2023</option>
+    </select>
+  </div>
+
+  <div class="leave-container">
+    <div
+      class="leave-card"
+      *ngFor="let leave of leaveTypes"
+      [ngClass]="leave.key"
+    >
+      <div class="card-header">
+        <h5>{{ leave.name }}</h5>
+        <span class="granted">Granted: {{ leave.granted }}</span>
+      </div>
+
+      <div class="balance-section">
+        <div class="balance">{{ getBalance(leave) | number: '2.0' }}</div>
+        <small>Balance</small>
+      </div>
+
+      <div class="details">
+        <a (click)="viewDetails(leave.key)">View Details</a>
+      </div>
+
+      <div class="progress-info">
+        <small>{{ leave.consumed }} of {{ leave.granted }} Consumed</small>
+        <div class="progress-bar-container">
+          <div
+            class="progress-bar"
+            [style.width.%]="getProgress(leave)"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>v6.3.0-prod-1490 | Privacy Policy | Terms Of Service</p>
+  </footer>
+</div>
+
+<div *ngIf="showDetails" class="details-section">
+  <button class="btn btn-secondary mb-3" (click)="goBack()">← Back</button>
+  <h3>{{ detailsData.type }} Leave Details</h3>
+
+  <div class="chart-container">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      chartType="doughnut"
+    ></canvas>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card">Granted: {{ detailsData.granted }}</div>
+    <div class="info-card">Consumed: {{ detailsData.consumed }}</div>
+    <div class="info-card">Available: {{ detailsData.available }}</div>
+  </div>
+
+  <h4 class="mt-4">Leave Transactions (Approved)</h4>
+  <table class="table table-striped" *ngIf="detailsData.history.length > 0">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Days</th>
+        <th>Reason</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of detailsData.history">
+        <td>{{ record.fromDate }}</td>
+        <td>{{ record.toDate }}</td>
+        <td>{{ record.days }}</td>
+        <td id="reasons">{{ record.reason }}</td>
+        <td>{{ record.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="detailsData.history.length === 0">No approved leaves found.</p>
+</div>

@@ -1,0 +1,124 @@
+<div class="holiday-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h2>📅 Holidays Calendar</h2>
+
+    <div class="filters">
+      <input type="number" [(ngModel)]="selectedYear" placeholder="Year">
+      <input type="text" [(ngModel)]="selectedRegion" placeholder="Region">
+      <button (click)="loadCalendar()">Load</button>
+    </div>
+  </div>
+
+  <div class="upcoming-grid">
+    <div class="holiday-card upcoming-card"
+        *ngFor="let h of upcomingHolidays">
+
+      <div class="date">
+        {{ h.holidayDate | date:'dd MMM yyyy' }}
+      </div>
+
+      <h3>{{ h.holidayName }}</h3>
+
+      <p class="desc">
+        {{ h.description || '— No description —' }}
+      </p>
+
+      <div class="meta">
+        <span class="type" [ngClass]="h.holidayType.toLowerCase()">
+          {{ h.holidayType }}
+        </span>
+
+        <span class="region">
+          📍 {{ h.region }}
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- MONTH HOLIDAY CARDS (EMPLOYEE VIEW) -->
+  <div class="month-holidays"
+      *ngIf="!isLoading && visibleHolidays.length">
+
+    <h3 class="section-title">
+      📌 Holidays in {{ months[selectedMonth] }} {{ selectedYear }}
+    </h3>
+
+    <div class="holiday-grid">
+
+      <div class="holiday-card"
+          *ngFor="let h of visibleHolidays">
+
+        <div class="date">
+          {{ h.holidayDate | date:'dd MMM yyyy' }}
+        </div>
+
+        <h3>{{ h.holidayName }}</h3>
+
+        <p class="desc">
+          {{ h.description || '— No description —' }}
+        </p>
+
+        <div class="meta">
+          <span class="type" [ngClass]="h.holidayType.toLowerCase()">
+            {{ h.holidayType }}
+          </span>
+
+          <span class="region">
+            📍 {{ h.region }}
+          </span>
+
+          <span class="optional" *ngIf="h.optional">
+            Optional
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <br>
+
+  <!-- HOLIDAY LEGEND -->
+  <div class="legend">
+    <span class="legend-item national">National</span>
+    <span class="legend-item festival">Festival</span>
+    <span class="legend-item optional">Optional</span>
+    <span class="legend-item custom">Custom</span>
+  </div>
+
+  <!-- MONTH NAVIGATION -->
+  <div class="month-header">
+    <button class="nav-btn" (click)="prevMonth()">❮</button>
+    <div class="month-title">
+      {{ months[selectedMonth] }} {{ selectedYear }}
+    </div>
+    <button class="nav-btn" (click)="nextMonth()">❯</button>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="calendar-grid">
+
+    <div class="day header" *ngFor="let d of weekDays">{{ d }}</div>
+
+    <div class="day"
+         *ngFor="let d of calendarDays"
+         [class.empty]="!d">
+
+      <ng-container *ngIf="d">
+        <div class="date-num">{{ d }}</div>
+
+        <div class="holiday"
+             *ngFor="let h of getHolidayByDay(d)"
+             [ngClass]="h.holidayType.toLowerCase()">
+          {{ h.holidayName }}
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+</div>

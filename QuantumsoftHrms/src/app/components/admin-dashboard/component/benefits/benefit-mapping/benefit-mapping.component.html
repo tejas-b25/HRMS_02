@@ -1,0 +1,154 @@
+<div class="container">
+
+  <h2>Employee Benefit Mapping</h2>
+
+  <div class="card form-card">
+    <h3>{{ isEditMode ? 'Update Mapping' : 'Assign Benefit' }}</h3>
+
+    <form #f="ngForm" (ngSubmit)="save()" novalidate>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Employee ID *</label>
+          <input
+            type="number"
+            name="employeeId"
+            [(ngModel)]="mapping.employeeId"
+            placeholder="Enter employee ID"
+            required
+            min="1"
+            #empCtrl="ngModel">
+          <small *ngIf="empCtrl.touched && empCtrl.invalid">Valid employee ID required</small>
+        </div>
+
+        <div class="field">
+          <label>Benefit ID *</label>
+          <input
+            type="number"
+            name="benefitId"
+            [(ngModel)]="mapping.benefit.benefitId"
+            placeholder="Enter benefit ID"
+            required
+            min="1"
+            #benefitCtrl="ngModel">
+          <small *ngIf="benefitCtrl.touched && benefitCtrl.invalid">Valid benefit ID required</small>
+        </div>
+
+        <div class="field">
+          <label>Provider ID *</label>
+          <input
+            type="number"
+            name="providerId"
+            [(ngModel)]="mapping.provider.providerId"
+            placeholder="Enter provider ID"
+            required
+            min="1"
+            #providerCtrl="ngModel">
+          <small *ngIf="providerCtrl.touched && providerCtrl.invalid">Valid provider ID required</small>
+        </div>
+
+        <div class="field">
+          <label>Coverage Amount</label>
+          <input
+            type="number"
+            name="coverageAmount"
+            [(ngModel)]="mapping.coverageAmount"
+            placeholder="Coverage amount"
+            min="0">
+        </div>
+
+        <div class="field">
+          <label>Premium Amount</label>
+          <input
+            type="number"
+            name="premiumAmount"
+            [(ngModel)]="mapping.premiumAmount"
+            placeholder="Premium amount"
+            min="0">
+        </div>
+
+        <div class="field">
+          <label>Employer Contribution</label>
+          <input
+            type="number"
+            name="employerContribution"
+            [(ngModel)]="mapping.employerContribution"
+            placeholder="Employer contribution"
+            min="0">
+        </div>
+
+        <div class="field">
+          <label>Start Date</label>
+          <input
+            type="date"
+            name="startDate"
+            [(ngModel)]="mapping.startDate">
+        </div>
+
+        <div class="field">
+          <label>End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            [(ngModel)]="mapping.endDate">
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <select name="status" [(ngModel)]="mapping.status">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="INACTIVE">INACTIVE</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="btn-row">
+        <button type="submit" [disabled]="f.invalid">
+          {{ isEditMode ? 'Update' : 'Save' }}
+        </button>
+        <button type="button" class="secondary" (click)="mapping = resetForm()">
+          Clear
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Benefit</th>
+          <th>Provider</th>
+          <th>Coverage</th>
+          <th>Premium</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let m of mappings">
+          <td>{{ m.employeeId }}</td>
+          <td>{{ m.benefit?.benefitName }}</td>
+          <td>{{ m.provider?.providerName }}</td>
+          <td>{{ m.coverageAmount }}</td>
+          <td>{{ m.premiumAmount }}</td>
+          <td>
+            <span class="status" [class.active]="m.status === 'ACTIVE'">
+              {{ m.status }}
+            </span>
+          </td>
+          <td>
+            <button class="edit" (click)="edit(m)">Edit</button>
+            <button class="delete" (click)="delete(m.mappingId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

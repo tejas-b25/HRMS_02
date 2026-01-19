@@ -1,0 +1,54 @@
+<div class="home-container">
+  <div class="dashboard-grid">
+    <div class="card time-card">  
+      <div class="time-header">
+        <div> 
+          <h3>{{ currentDate }}</h3>
+          <p>Thursday | 09:30 AM To 06:30 PM</p>
+        </div>                                        
+        <div class="status-dot" [class.active]="signedIn"></div>
+      </div>                                  
+      <div class="time-display">    
+        <h2>{{ currentTime }}</h2>                 
+      </div>    
+      <div class="time-footer">
+        <a href="#" class="link" (click)="openSwipeModal($event)">View Swipes</a>
+        <button class="signout-btn" (click)="toggleSign()">                
+          {{ signedIn ? 'Sign Out' : 'Sign In' }}
+        </button> 
+      </div> 
+    </div>                              
+  </div>                
+  <div class="swipe-backdrop" *ngIf="showSwipeModal">
+    <div class="swipe-modal">
+      <div class="swipe-header">
+        <h3>Swipes</h3>     
+        <button class="close-btn" (click)="closeSwipeModal()">&#10006;</button>
+      </div>        
+      <div class="swipe-info">      
+        <p><strong>Date</strong> {{ currentDate }}</p>                                    
+        <p><strong>Shift Time</strong> 09:30 to 18:30</p>     
+        <p><strong>Shift Type</strong> GEN</p>
+      </div>                                
+      <table class="swipe-table">  
+        <thead>
+          <tr> 
+            <th>Swipe Time</th>         
+            <th>In/Out</th>           
+            <th>Door/Address</th>       
+          </tr>           
+        </thead>       
+        <tbody>
+          <tr *ngFor="let record of swipeRecords">  
+            <td>{{ record.time }}</td>
+            <td>{{ record.type }}</td>             
+            <td>{{ record.address }}</td>
+          </tr> 
+          <tr *ngIf="swipeRecords.length === 0">
+            <td colspan="3" class="no-records">No swipe records yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

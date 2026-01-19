@@ -1,0 +1,31 @@
+*{
+  margin-top: 23px;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+*{
+  background-color: rgb(247 247 247);
+  font-family: arial;
+  /* Remove global margin-top and overflow */
+}           
+.layout-container {
+  display: flex;
+  margin-top: 60px;
+  height: calc(100vh - 60px);
+  overflow: hidden;
+}
+/* Sidebar */
+app-sidebar {
+  padding-left: 1px;
+  width: 257px;
+  flex-shrink:0;
+}
+.content-container {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+}

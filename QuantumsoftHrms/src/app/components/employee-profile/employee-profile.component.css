@@ -1,0 +1,496 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.employee-profile-container {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  padding: 20px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Header Section */
+.header-section {
+  background: white;
+  border-radius: 8px;
+  padding: 25px 30px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #2196f3;
+}
+
+.header-section h1 {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+/* Profile Image Section */
+.employee-basic-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.profile-image {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.profile-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  border: 3px solid #e1e8ed;
+  object-fit: cover;
+  object-position: center;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.profile-photo:hover {
+  border-color: #2196f3;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+}
+
+.basic-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.basic-details h2 {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.basic-details p {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #5d6d7e;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.basic-details strong {
+  font-weight: 600;
+  color: #34495e;
+  min-width: 120px;
+}
+
+/* Navigation Tabs */
+.navigation-tabs {
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e1e8ed;
+  overflow-x: auto;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab {
+  padding: 15px 25px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  position: relative;
+  user-select: none;
+}
+
+.tab:hover {
+  color: #2196f3;
+  background-color: #f8f9fa;
+}
+
+.tab.active {
+  color: #2196f3;
+  font-weight: 600;
+}
+
+.tab::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #2196f3;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tab.active::after {
+  transform: scaleX(1);
+}
+
+/* Content Sections */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-card {
+  background: white;
+  border-radius: 8px;
+  padding: 25px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e8ed;
+  scroll-margin-top: 100px;
+  transition: all 0.3s ease;
+}
+
+.section-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f3f5;
+}
+
+.section-header h2 {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* Info Grid Layout */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.info-item:hover label {
+  color: #2196f3;
+}
+
+.info-item label {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #2c3e50;
+  padding: 10px 0;
+  min-height: 20px;
+}
+
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Edit Mode Styles */
+.info-grid.editing {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e1e8ed;
+}
+
+.edit-input {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 2px solid #2196f3;
+  border-radius: 4px;
+  background: white;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+.edit-input.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Buttons */
+.edit-btn {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-btn:hover:not(:disabled) {
+  background: #1976d2;
+  transform: translateY(-1px);
+}
+
+.edit-btn:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #ecf0f1;
+  justify-content: flex-end;
+}
+
+.save-btn {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #45a049;
+}
+
+.cancel-btn {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn:hover {
+  background: #da190b;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section highlight animation */
+.section-card:target {
+  animation: highlightSection 2s ease;
+}
+
+@keyframes highlightSection {
+  0% {
+    background-color: rgba(33, 150, 243, 0.1);
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+/* Focus states for accessibility */
+.edit-btn:focus,
+.save-btn:focus,
+.cancel-btn:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+.tab:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: -2px;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .employee-profile-container {
+    padding: 15px;
+  }
+  
+  .section-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .employee-profile-container {
+    padding: 10px;
+  }
+  
+  .header-section {
+    padding: 20px;
+  }
+  
+  .header-section h1 {
+    font-size: 20px;
+  }
+  
+  .employee-basic-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .profile-photo {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .basic-details {
+    align-items: center;
+  }
+  
+  .basic-details p {
+    justify-content: center;
+  }
+  
+  .navigation-tabs {
+    flex-wrap: wrap;
+    position: relative;
+    top: auto;
+  }
+  
+  .tab {
+    padding: 12px 15px;
+    font-size: 13px;
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .action-buttons {
+    justify-content: stretch;
+  }
+  
+  .save-btn, .cancel-btn {
+    flex: 1;
+  }
+  
+  .section-card {
+    scroll-margin-top: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .employee-profile-container {
+    padding: 8px;
+  }
+  
+  .header-section {
+    padding: 15px;
+  }
+  
+  .header-section h1 {
+    font-size: 18px;
+  }
+  
+  .section-card {
+    padding: 15px;
+  }
+  
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .basic-details h2 {
+    font-size: 18px;
+  }
+  
+  .basic-details p {
+    font-size: 13px;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+  
+  .basic-details strong {
+    min-width: auto;
+  }
+  
+  .tab {
+    padding: 10px 12px;
+    font-size: 12px;
+    min-width: 100px;
+  }
+  
+  .value {
+    font-size: 13px;
+  }
+  
+  .edit-btn, .save-btn, .cancel-btn {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

@@ -1,0 +1,334 @@
+
+/* Account Info Container */
+.account-info-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+/* Header Section */
+.header-section {
+  margin-bottom: 30px;
+}               
+.header-section h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #445a70;
+  margin: 0;
+}
+/* Info Cards */
+.info-card {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e8ed;
+}
+
+.basic-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+/* Employee Header */
+.employee-header {
+  margin-bottom: 20px;
+}
+.employee-name {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 8px 0;
+}
+.employee-id {
+  font-size: 14px;
+  opacity: 0.9;
+} 
+/* Basic Details Grid */
+.basic-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.label {
+  font-size: 12px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 500;
+}
+/* Section Divider */
+.section-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #e1e8ed, transparent);
+  margin: 30px 0;
+}
+/* Profile Section */
+.section-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #445a70;
+
+  margin-bottom: 20px;
+}
+
+.subsection-title {
+  font-size: 20px;
+  font-weight: 500;
+   color:rgb(111, 127, 143)0;
+
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f3f5;
+}
+
+/* Field Groups */
+.field-group {
+  margin-bottom: 25px;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+.field-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #7f8c8d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.edit-icon {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.edit-icon:hover:not(:disabled) {
+  background-color: #f8f9fa;
+}
+.edit-icon:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.field-value {
+  font-size: 16px;
+  color: #2c3e50;
+  padding: 10px 0;
+  min-height: 20px;
+}
+/* Edit Fields */
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.edit-input, .edit-textarea {
+  padding: 12px 15px;
+  border: 2px solid #2196f3;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  transition: all 0.3s ease;
+  background: white;
+}
+.edit-input:focus, .edit-textarea:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+.edit-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+.edit-actions {
+  display: flex;
+  gap: 10px;
+}
+/* Buttons */
+.save-btn, .cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.save-btn {
+  background: #4caf50;
+  color: white;
+}
+.save-btn:hover {
+  background: #45a049;
+}
+.cancel-btn {
+  background: #f44336;
+  color: white;
+}
+.cancel-btn:hover {
+  background: #da190b;
+}
+/* Action Section */
+.action-section {
+  margin-top: 30px;
+}
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.action-btn {
+  padding: 12px 20px;
+  border: 2px solid #2196f3;
+  border-radius: 6px;
+  background: white;
+  color: #2196f3;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.action-btn:hover {
+  background: #2196f3;
+  color: white;
+}
+/* Login History */
+.login-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-item {
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+.login-date {
+  font-size: 12px;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+.login-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.login-device {
+  font-weight: 600;
+  color: #2c3e50;
+}
+.login-location {
+  color: #7f8c8d;
+  font-size: 12px;
+}
+/* Change Password Form */
+.password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+.form-input {
+  padding: 12px 15px;
+  border: 2px solid #e1e8ed;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+.form-input:focus {
+  outline: none;
+  border-color: #2196f3;
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.close-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  margin-top: 15px;
+}
+.close-btn:hover {
+  background: #f5f5f5;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .account-info-container {
+    padding: 15px;
+  }
+  
+  .basic-details-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .edit-actions, .form-actions {
+    flex-direction: column;
+  }  
+  .login-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+@media (max-width: 480px) {
+  .account-info-container {
+    padding: 10px;
+  }
+  
+  .info-card {
+    padding: 20px;
+  }
+  
+  .employee-name {
+    font-size: 20px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+  }
+  
+  .subsection-title {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,126 @@
+<div class="container">
+
+  <div class="card">
+    <h3>{{ isEditMode ? 'Update' : 'Create' }} Announcement</h3>
+
+    <form #announcementForm="ngForm"
+          (ngSubmit)="submitAnnouncement(announcementForm)">
+
+      <input
+        type="text"
+        name="title"
+        ngModel
+        #title="ngModel"
+        required
+        minlength="3"
+        placeholder="Title"
+        [class.invalid]="title.invalid && title.touched" />
+
+      <small class="error"
+             *ngIf="title.invalid && title.touched">
+        Title is required (min 3 characters)
+      </small>
+
+      <textarea
+        name="description"
+        ngModel
+        #description="ngModel"
+        required
+        minlength="10"
+        placeholder="Description"
+        [class.invalid]="description.invalid && description.touched">
+      </textarea>
+
+      <small class="error"
+             *ngIf="description.invalid && description.touched">
+        Description must be at least 10 characters
+      </small>
+
+      <input
+        type="text"
+        name="category"
+        ngModel
+        #category="ngModel"
+        pattern="^[a-zA-Z ]*$"
+        placeholder="Category"
+        [class.invalid]="category.invalid && category.touched" />
+
+      <small class="error"
+             *ngIf="category.invalid && category.touched">
+        Category should contain only alphabets
+      </small>
+
+      <select
+        name="priority"
+        ngModel
+        #priority="ngModel"
+        required
+        [class.invalid]="priority.invalid && priority.touched">
+        <option value="">Select Priority</option>
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+
+      <small class="error"
+             *ngIf="priority.invalid && priority.touched">
+        Please select priority
+      </small>
+
+      <input
+        type="datetime-local"
+        name="publishDate"
+        ngModel
+        #publishDate="ngModel"
+        required
+        [class.invalid]="publishDate.invalid && publishDate.touched" />
+
+      <small class="error"
+             *ngIf="publishDate.invalid && publishDate.touched">
+        Publish date is required
+      </small>
+
+      <input
+        type="datetime-local"
+        name="expireDate"
+        ngModel
+        #expireDate="ngModel"
+        required
+        [class.invalid]="expireDate.invalid && expireDate.touched" />
+
+      <small class="error"
+             *ngIf="expireDate.invalid && expireDate.touched">
+        Expire date is required
+      </small>
+
+      <input type="file" (change)="onFileChange($event)" />
+
+      <button type="submit"
+              [disabled]="announcementForm.invalid">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+
+    </form>
+  </div>
+
+  <hr>
+
+  <div class="card" *ngFor="let a of filteredAnnouncements">
+    <h4>{{ a.title }}</h4>
+    <p>{{ a.description }}</p>
+
+    <p>
+      Status:
+      <span [class.active]="a.isActive"
+            [class.deleted]="!a.isActive">
+        {{ a.isActive ? 'Active' : 'Deleted' }}
+      </span>
+    </p>
+
+    <div class="action-buttons">
+      <button (click)="editAnnouncement(a, announcementForm)">Edit</button>
+      <button (click)="softDelete(a.announcementId)">Delete</button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,200 @@
+<div class="reg-wrapper container">
+
+  <!-- ================= TABS ================= -->
+  <div class="w-100 mb-3 d-flex justify-content-center">
+    <div class="btn-group" role="group">
+      <button class="btn"
+        [ngClass]="{'btn-primary text-white': activeTab === 'apply', 'btn-outline-secondary': activeTab !== 'apply'}"
+        (click)="setTab('apply')">
+        Apply
+      </button>
+
+      <button class="btn"
+        [ngClass]="{'btn-primary text-white': activeTab === 'pending', 'btn-outline-secondary': activeTab !== 'pending'}"
+        (click)="setTab('pending')">
+        Pending
+      </button>
+
+      <button class="btn"
+        [ngClass]="{'btn-primary text-white': activeTab === 'history', 'btn-outline-secondary': activeTab !== 'history'}"
+        (click)="setTab('history')">
+        History
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= APPLY TAB ================= -->
+  <div *ngIf="activeTab === 'apply'" class="d-flex gap-3 flex-wrap">
+
+    <!-- Calendar -->
+    <div class="calendar-panel border rounded p-3">
+      <div class="calendar-header d-flex justify-content-between mb-2">
+        <button class="btn btn-sm btn-outline-secondary" (click)="prevMonth()">‹</button>
+        <span class="fw-bold">{{ months[currentMonth] }} {{ currentYear }}</span>
+        <button class="btn btn-sm btn-outline-secondary" (click)="nextMonth()">›</button>
+      </div>
+
+      <div class="calendar-grid d-grid mb-2" style="grid-template-columns: repeat(7, 1fr); gap: 4px;">
+        <div class="text-center fw-bold small" *ngFor="let d of dayNames">{{ d }}</div>
+
+        <div *ngFor="let b of blanks"></div>
+
+        <div
+          class="date-cell text-center border rounded p-1 cursor-pointer"
+          *ngFor="let d of daysInMonth"
+          [ngClass]="{
+            'bg-primary text-white': selectedDay === d,
+            'border-danger': isToday(d)
+          }"
+          (click)="selectDate(d)">
+          {{ d }}
+        </div>
+      </div>
+
+      <button class="btn btn-primary w-100" (click)="toggleQuickAdd()">
+        {{ showQuickAddForm ? 'Close Quick Add' : 'Quick Add' }}
+      </button>
+    </div>
+
+    <!-- Illustration -->
+    <div class="image-panel flex-grow-1 text-center" *ngIf="!showQuickAddForm">
+      <img
+        src="https://linckia.cdn.greythr.com/assets/Permission-Calendar-illustration.png"
+        class="img-fluid"
+        alt="Permission Calendar">
+      <h5 class="mt-3">Get Going!</h5>
+      <p class="text-muted">Select date(s) to apply for permission.</p>
+    </div>
+
+    <!-- Quick Add Form -->
+    <div class="right-panel flex-grow-1" *ngIf="showQuickAddForm">
+      <div class="card p-3">
+
+        <h5 class="fw-bold mb-3">{{ getFormattedDate() }}</h5>
+
+        <!-- Remarks -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Remarks</label>
+          <textarea
+            class="form-control"
+            placeholder="Write remarks (optional)"
+            [(ngModel)]="currentRemarks">
+          </textarea>
+        </div>
+
+        <!-- Entry -->
+        <div class="row g-2 mb-3">
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold">Permission Type</label>
+            <select class="form-select form-select-sm" [(ngModel)]="currentEntry.permissionType">
+              <option>Select</option>
+              <option>Short Leave</option>
+              <option>Late Arrival</option>
+              <option>Early Departure</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">From</label>
+            <input type="time" class="form-control form-control-sm"
+              [(ngModel)]="currentEntry.fromTime">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label small fw-semibold">To</label>
+            <input type="time" class="form-control form-control-sm"
+              [(ngModel)]="currentEntry.toTime">
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label small fw-semibold">Reason</label>
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Enter reason"
+              [(ngModel)]="currentEntry.reason">
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary w-50" (click)="cancelQuickAdd()">Cancel</button>
+          <button class="btn btn-primary w-50" (click)="applyQuickAdd()">Apply</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PENDING TAB ================= -->
+  <div *ngIf="activeTab === 'pending'">
+    <h4 class="mb-3">Pending Requests</h4>
+
+    <div *ngIf="pendingPermissions.length === 0" class="text-center text-muted">
+      <img src="https://linckia.cdn.greythr.com/assets/override-empty-state.svg">
+      <p>No pending requests</p>
+    </div>
+
+    <table *ngIf="pendingPermissions.length" class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Reason</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of pendingPermissions">
+          <td>{{ r.attendanceDate }}</td>
+          <td>{{ r.requestedInTime }}</td>
+          <td>{{ r.requestedOutTime }}</td>
+          <td>{{ r.reason }}</td>
+          <td><span class="badge bg-warning text-dark">PENDING</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ================= HISTORY TAB ================= -->
+  <div *ngIf="activeTab === 'history'">
+    <h4 class="mb-3">Request History</h4>
+
+    <div *ngIf="permissionHistory.length === 0" class="text-center text-muted">
+      <img src="https://linckia.cdn.greythr.com/assets/override-empty-state.svg">
+      <p>No history available</p>
+    </div>
+
+    <table *ngIf="permissionHistory.length" class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Date</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Reason</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of permissionHistory">
+          <td>{{ r.attendanceDate }}</td>
+          <td>{{ r.requestedInTime }}</td>
+          <td>{{ r.requestedOutTime }}</td>
+          <td>{{ r.reason }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-success': r.status === 'APPROVED',
+                'bg-danger': r.status === 'REJECTED'
+              }">
+              {{ r.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

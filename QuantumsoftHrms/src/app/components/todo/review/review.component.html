@@ -1,0 +1,50 @@
+<div class="review-container">
+  <!-- <h2>Review Section</h2> -->
+
+  <div class="review-layout">
+    <div class="review-sidebar">
+      <ul class="review-menu">
+        <h3>ATTENDANCE</h3>
+        <li>
+          <a routerLink="regularization" routerLinkActive="active">Regularization & Permission</a>
+        </li>
+
+        <h3>CUSTOM WORKFLOW</h3>
+        <li>
+          <a routerLink="request-hub" routerLinkActive="active">Request Hub</a>
+        </li>
+
+        <h3>EMP INFO</h3>                                      
+
+        <li>
+          <a routerLink="confirmation" routerLinkActive="active">Confirmation</a>
+        </li>
+        <li>
+          <a routerLink="resignation" routerLinkActive="active">Resignation</a>
+        </li>
+        <li>
+          <a routerLink="helpdesk" routerLinkActive="active">Helpdesk</a>
+        </li>
+
+        <h3>LEAVE</h3>
+
+        <li>
+          <a routerLink="leave" routerLinkActive="active">Leave</a>
+        </li>
+        <li>
+          <a routerLink="leave-cancel" routerLinkActive="active">Leave Cancel</a>
+        </li>
+        <li>
+          <a routerLink="leave-comp-off" routerLinkActive="active">Leave Comp Off</a>
+        </li>
+        <li>
+          <a routerLink="restricted-holiday" routerLinkActive="active">Restricted Holiday</a>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="review-content">
+      <router-outlet></router-outlet>                 
+    </div>
+  </div>    
+</div>

@@ -1,0 +1,45 @@
+.image-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+.btn{
+  margin-top: 12px;
+}
+.image-panel img {
+  max-width: 300px;
+  height: auto;
+}
+
+.calendar-panel {
+  min-width: 300px;
+  margin-bottom: 23px;
+}
+
+.date-cell {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.date-cell:hover {
+  background-color: #f8f9fa;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.entry-card {
+  border: 1px solid #e9ecef;
+}
+
+.jump-to-section {
+  padding: 10px 0;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}

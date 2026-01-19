@@ -1,0 +1,135 @@
+<div class="card mb-4">
+
+  <h2>Apply Regularization (Admin)</h2>
+
+  <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+
+    <input
+      type="text"
+      name="employeeId"
+      class="form-control mb-1"
+      placeholder="Enter Employee ID"
+      [(ngModel)]="form.employeeId"
+      #employeeId="ngModel"
+      required
+      maxlength="10"
+      pattern="^[0-9]+$"
+      [class.invalid]="employeeId.invalid && employeeId.touched">
+
+    <small class="error" *ngIf="employeeId.invalid && employeeId.touched">
+      Employee ID must contain only numbers
+    </small>
+
+    <input
+      type="date"
+      name="attendanceDate"
+      class="form-control mb-1"
+      [(ngModel)]="form.attendanceDate"
+      #attendanceDate="ngModel"
+      required
+      [class.invalid]="attendanceDate.invalid && attendanceDate.touched">
+
+    <small class="error" *ngIf="attendanceDate.invalid && attendanceDate.touched">
+      Attendance date is required
+    </small>
+
+    <input
+      type="datetime-local"
+      name="requestedInTime"
+      class="form-control mb-1"
+      [(ngModel)]="form.requestedInTime"
+      #requestedInTime="ngModel"
+      required
+      [class.invalid]="requestedInTime.invalid && requestedInTime.touched">
+
+    <small class="error" *ngIf="requestedInTime.invalid && requestedInTime.touched">
+      Requested in time is required
+    </small>
+
+    <input
+      type="datetime-local"
+      name="requestedOutTime"
+      class="form-control mb-1"
+      [(ngModel)]="form.requestedOutTime"
+      #requestedOutTime="ngModel"
+      required
+      [class.invalid]="requestedOutTime.invalid && requestedOutTime.touched">
+
+    <small class="error" *ngIf="requestedOutTime.invalid && requestedOutTime.touched">
+      Requested out time is required
+    </small>
+
+    <textarea
+      name="reason"
+      class="form-control mb-1"
+      placeholder="Enter Reason"
+      [(ngModel)]="form.reason"
+      #reason="ngModel"
+      required
+      minlength="5"
+      pattern="^[a-zA-Z ]+$"
+      [class.invalid]="reason.invalid && reason.touched">
+    </textarea>
+
+    <small class="error" *ngIf="reason.invalid && reason.touched">
+      Reason should contain only alphabets (minimum 5 characters)
+    </small>
+
+    <button
+      class="btn btn-primary w-100 mt-3"
+      type="submit"
+      [disabled]="f.invalid">
+      Submit
+    </button>
+
+  </form>
+</div>
+
+<div class="card">
+  <h3>All Regularization Requests</h3>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Employee</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th width="220">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let r of requests">
+        <td>{{ r.attendanceRegId }}</td>
+        <td>{{ r.employeeName }}</td>
+        <td>{{ r.attendanceDate }}</td>
+        <td>{{ r.reason }}</td>
+        <td>
+          <span
+            [class.text-warning]="r.status === 'PENDING'"
+            [class.text-success]="r.status === 'APPROVED'"
+            [class.text-danger]="r.status === 'REJECTED'">
+            {{ r.status }}
+          </span>
+        </td>
+        <td>
+          <button
+            class="btn btn-success btn-sm me-2"
+            (click)="approve(r)"
+            [disabled]="r.status !== 'PENDING'">
+            Approve
+          </button>
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="reject(r)"
+            [disabled]="r.status !== 'PENDING'">
+            Reject
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
